@@ -37,7 +37,7 @@ function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen text-faang-text font-sans selection:bg-faang-accent selection:text-white">
+    <div className="relative min-h-screen text-faang-text font-sans selection:bg-faang-accent selection:text-white overflow-x-hidden w-full">
       <Background />
       <Navbar />
       <main className="relative z-10">
