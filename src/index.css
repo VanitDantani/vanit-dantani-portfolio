@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "SF Pro Text", "Helvetica Neue", sans-serif;
+  --color-apple-gray: #f5f5f7;
+  --color-apple-dark: #1d1d1f;
+  --color-apple-blue: #0066cc;
+  --color-apple-blue-hover: #0077ed;
+  --color-apple-text: #1d1d1f;
+  --color-apple-text-light: #86868b;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-white text-apple-text antialiased;
+    overflow-x: hidden;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border-b border-black/5;
+  }
+  
+  .section-padding {
+    @apply py-24 md:py-32 px-6 md:px-12 max-w-7xl mx-auto;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
