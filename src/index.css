@@ -2,35 +2,45 @@
 
 @theme {
   --font-sans: "Inter", "SF Pro Text", "Helvetica Neue", sans-serif;
-  --color-apple-gray: #f5f5f7;
-  --color-apple-dark: #1d1d1f;
-  --color-apple-blue: #0066cc;
-  --color-apple-blue-hover: #0077ed;
-  --color-apple-text: #1d1d1f;
-  --color-apple-text-light: #86868b;
+  --font-mono: "Fira Code", "JetBrains Mono", monospace;
+  
+  /* FAANG Dark Theme Colors */
+  --color-faang-bg: #0a0a0a;
+  --color-faang-surface: #111111;
+  --color-faang-surface-hover: #1a1a1a;
+  --color-faang-border: #222222;
+  --color-faang-text: #ededed;
+  --color-faang-text-muted: #888888;
+  --color-faang-accent: #0070f3; /* Vercel Blue */
+  --color-faang-accent-glow: rgba(0, 112, 243, 0.2);
 }
 
 @layer base {
   body {
-    @apply font-sans bg-white text-apple-text antialiased;
+    @apply font-sans bg-faang-bg text-faang-text antialiased;
     overflow-x: hidden;
   }
   
   html {
     scroll-behavior: smooth;
+    color-scheme: dark;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-white/80 backdrop-blur-md border-b border-black/5;
+    @apply bg-faang-surface/80 backdrop-blur-md border-b border-faang-border;
   }
   
   .section-padding {
-    @apply py-24 md:py-32 px-6 md:px-12 max-w-7xl mx-auto;
+    @apply py-16 md:py-32 px-6 md:px-12 max-w-7xl mx-auto;
   }
 
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .bento-card {
+    @apply bg-faang-surface border border-faang-border rounded-2xl overflow-hidden hover:border-faang-text-muted transition-colors duration-300;
   }
 }

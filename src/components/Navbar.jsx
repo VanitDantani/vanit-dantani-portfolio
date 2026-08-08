@@ -33,7 +33,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        <a href="#" className="text-xl font-bold tracking-tight text-apple-text">
+        <a href="#" className="text-xl font-bold tracking-tight text-faang-text">
           Vanit Dantani
         </a>
 
@@ -43,16 +43,17 @@ export default function Navbar() {
             <a
               key={item.name}
               href={item.href}
-              className="text-sm text-apple-text-light hover:text-apple-text transition-colors"
+              className="relative text-sm font-mono text-faang-text-muted hover:text-faang-text transition-colors group py-2"
             >
               {item.name}
+              <span className="absolute left-0 bottom-0 w-full h-[2px] bg-faang-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-center duration-300 ease-out shadow-[0_0_8px_rgba(0,112,243,0.8)] rounded-full"></span>
             </a>
           ))}
         </div>
 
         {/* Mobile Nav Toggle */}
         <button
-          className="md:hidden text-apple-text"
+          className="md:hidden text-faang-text"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -64,14 +65,14 @@ export default function Navbar() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute top-full left-0 right-0 glass flex flex-col items-center py-6 space-y-4 md:hidden shadow-lg"
+          className="absolute top-full left-0 right-0 glass flex flex-col items-center py-6 space-y-4 md:hidden shadow-lg border-b border-faang-border"
         >
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-apple-text hover:text-apple-blue font-medium"
+              className="text-faang-text hover:text-faang-accent font-mono text-sm"
             >
               {item.name}
             </a>
