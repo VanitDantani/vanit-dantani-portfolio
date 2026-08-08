@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative flex items-center justify-center overflow-hidden bg-transparent">
+    <section id="hero" className="relative flex items-center justify-center overflow-hidden bg-transparent pt-32 md:pt-20">
 
       <div className="section-padding text-center">
         <motion.h1
