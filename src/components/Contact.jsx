@@ -15,38 +15,39 @@ export default function Contact() {
           Get In Touch
         </motion.h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col justify-center"
           >
-            <h3 className="text-2xl font-bold mb-6 text-faang-text">Let's connect.</h3>
-            <p className="text-faang-text-muted mb-10 text-lg">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+            <h3 className="text-4xl md:text-5xl font-bold mb-6 text-faang-text tracking-tight leading-tight">
+              Let's build something <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-faang-accent to-purple-500">amazing together.</span>
+            </h3>
+            <p className="text-faang-text-muted mb-12 text-lg font-light leading-relaxed">
+              Whether you have a visionary project in mind or just want to say hello, my inbox is always open. I'll try my best to get back to you!
             </p>
 
-            <div className="space-y-6">
-              <a href="mailto:vanitdantani05@gmail.com" className="flex items-center gap-4 group">
-                <div className="w-12 h-12 bg-faang-surface rounded-md flex items-center justify-center border border-faang-border group-hover:border-faang-accent transition-all">
-                  <Mail className="text-faang-text-muted group-hover:text-faang-accent transition-colors" />
-                </div>
-                <span className="text-lg font-mono text-faang-text-muted group-hover:text-faang-text transition-colors">vanitdantani05@gmail.com</span>
+            <div className="grid grid-cols-2 gap-4">
+              <a href="mailto:vanitdantani05@gmail.com" className="bento-card p-6 flex flex-col items-center justify-center text-center group hover:border-faang-accent/50 transition-all duration-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-faang-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <Mail className="w-8 h-8 text-faang-text-muted group-hover:text-faang-accent group-hover:-translate-y-1 transition-all duration-300 mb-4" />
+                <span className="text-sm font-mono text-faang-text group-hover:text-faang-accent transition-colors">Email Me</span>
               </a>
               
-              <a href="https://www.linkedin.com/in/vanit-dantani-23b2582b1" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
-                <div className="w-12 h-12 bg-faang-surface rounded-md flex items-center justify-center border border-faang-border group-hover:border-faang-accent transition-all">
-                  <Globe className="text-faang-text-muted group-hover:text-faang-accent transition-colors" />
-                </div>
-                <span className="text-lg font-mono text-faang-text-muted group-hover:text-faang-text transition-colors">LinkedIn</span>
+              <a href="https://www.linkedin.com/in/vanit-dantani-23b2582b1" target="_blank" rel="noopener noreferrer" className="bento-card p-6 flex flex-col items-center justify-center text-center group hover:border-faang-accent/50 transition-all duration-300 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0077b5]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <Globe className="w-8 h-8 text-faang-text-muted group-hover:text-[#0077b5] group-hover:-translate-y-1 transition-all duration-300 mb-4" />
+                <span className="text-sm font-mono text-faang-text group-hover:text-[#0077b5] transition-colors">LinkedIn</span>
               </a>
 
-              <a href="https://github.com/VanitDantani" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
-                <div className="w-12 h-12 bg-faang-surface rounded-md flex items-center justify-center border border-faang-border group-hover:border-faang-accent transition-all">
-                  <Code className="text-faang-text-muted group-hover:text-faang-accent transition-colors" />
-                </div>
-                <span className="text-lg font-mono text-faang-text-muted group-hover:text-faang-text transition-colors">GitHub</span>
+              <a href="https://github.com/VanitDantani" target="_blank" rel="noopener noreferrer" className="bento-card p-6 flex flex-col items-center justify-center text-center group hover:border-faang-accent/50 transition-all duration-300 relative overflow-hidden col-span-2 sm:col-span-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-faang-text/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <Code className="w-8 h-8 text-faang-text-muted group-hover:text-faang-text group-hover:-translate-y-1 transition-all duration-300 mb-4" />
+                <span className="text-sm font-mono text-faang-text transition-colors">GitHub Profile</span>
               </a>
             </div>
           </motion.div>
@@ -56,39 +57,44 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="bento-card p-8 md:p-10"
+            className="bento-card p-8 md:p-12 relative overflow-hidden border border-faang-border/50 shadow-2xl"
           >
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div>
-                <label htmlFor="name" className="block text-sm font-mono text-faang-text-muted mb-2">Name</label>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-faang-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
+            
+            <form className="space-y-8 relative z-10" onSubmit={(e) => e.preventDefault()}>
+              <div className="space-y-2 group">
+                <label htmlFor="name" className="text-xs font-mono tracking-widest text-faang-text-muted uppercase group-focus-within:text-faang-accent transition-colors">Name</label>
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-4 py-3 rounded-md bg-faang-bg border border-faang-border focus:border-faang-accent focus:ring-1 focus:ring-faang-accent outline-none transition-all text-faang-text"
-                  placeholder="John Doe"
+                  className="w-full bg-transparent border-b border-faang-border focus:border-faang-accent py-3 text-faang-text outline-none transition-all placeholder:text-faang-text-muted/30"
+                  placeholder="Enter your name"
                 />
               </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-mono text-faang-text-muted mb-2">Email</label>
+              
+              <div className="space-y-2 group">
+                <label htmlFor="email" className="text-xs font-mono tracking-widest text-faang-text-muted uppercase group-focus-within:text-faang-accent transition-colors">Email</label>
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-3 rounded-md bg-faang-bg border border-faang-border focus:border-faang-accent focus:ring-1 focus:ring-faang-accent outline-none transition-all text-faang-text"
-                  placeholder="john@example.com"
+                  className="w-full bg-transparent border-b border-faang-border focus:border-faang-accent py-3 text-faang-text outline-none transition-all placeholder:text-faang-text-muted/30"
+                  placeholder="Enter your email"
                 />
               </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-mono text-faang-text-muted mb-2">Message</label>
+              
+              <div className="space-y-2 group">
+                <label htmlFor="message" className="text-xs font-mono tracking-widest text-faang-text-muted uppercase group-focus-within:text-faang-accent transition-colors">Message</label>
                 <textarea
                   id="message"
                   rows="4"
-                  className="w-full px-4 py-3 rounded-md bg-faang-bg border border-faang-border focus:border-faang-accent focus:ring-1 focus:ring-faang-accent outline-none transition-all text-faang-text resize-none"
-                  placeholder="How can I help you?"
+                  className="w-full bg-transparent border-b border-faang-border focus:border-faang-accent py-3 text-faang-text outline-none transition-all placeholder:text-faang-text-muted/30 resize-none"
+                  placeholder="Tell me about your project..."
                 ></textarea>
               </div>
+              
               <button
                 type="submit"
-                className="w-full py-4 bg-faang-text text-faang-bg rounded-md font-bold hover:bg-white/90 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                className="w-full mt-4 py-4 bg-faang-text text-faang-bg rounded-lg font-bold hover:bg-white transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:-translate-y-1 flex items-center justify-center gap-2"
               >
                 Send Message
               </button>
