@@ -66,27 +66,33 @@ export default function Background() {
       <div className="absolute inset-0 bg-faang-bg transition-colors duration-500"></div>
 
       {/* 1.5. Light Mode Specific Background (Grid + Blobs) */}
-      <div className="absolute inset-0 opacity-0 transition-opacity duration-500 light-bg-layer">
-        {/* Subtle Grid */}
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-700 light-bg-layer">
+        {/* Visible Grid */}
         <div 
-          className="absolute inset-0 opacity-[0.03] animate-grid-flow"
+          className="absolute inset-0 opacity-20 animate-grid-flow"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z' fill='%23000000' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
             backgroundSize: '40px 40px'
           }}
         ></div>
         
-        {/* Floating Blurry Orbs */}
+        {/* Highly Visible Floating Orbs */}
         <motion.div 
-          animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-faang-accent/15 rounded-full blur-[100px] pointer-events-none"
+          animate={{ x: [0, 150, 0], y: [0, 100, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-faang-accent/40 rounded-full blur-[120px] pointer-events-none mix-blend-multiply"
         ></motion.div>
         
         <motion.div 
-          animate={{ x: [0, -100, 0], y: [0, -50, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none"
+          animate={{ x: [0, -150, 0], y: [0, -100, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[-10%] right-[-10%] w-[900px] h-[900px] bg-purple-500/30 rounded-full blur-[150px] pointer-events-none mix-blend-multiply"
+        ></motion.div>
+        
+        <motion.div 
+          animate={{ x: [0, 50, 0], y: [0, -150, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[40%] left-[60%] w-[600px] h-[600px] bg-pink-400/30 rounded-full blur-[120px] pointer-events-none mix-blend-multiply"
         ></motion.div>
       </div>
 
