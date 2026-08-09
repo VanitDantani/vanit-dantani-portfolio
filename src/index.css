@@ -30,8 +30,8 @@
   --color-faang-border: #222222;
   --color-faang-text: #ededed;
   --color-faang-text-muted: #888888;
-  --color-faang-accent: #0070f3; /* Vercel Blue */
-  --color-faang-accent-glow: rgba(0, 112, 243, 0.2);
+  --color-faang-accent: #10b981; /* Emerald Green */
+  --color-faang-accent-glow: rgba(16, 185, 129, 0.2);
 }
 
 @layer base {

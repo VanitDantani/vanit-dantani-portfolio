@@ -1,83 +1,36 @@
-import { useCallback } from "react";
-import Particles from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim";
-
 export default function Background() {
-  const particlesInit = useCallback(async (engine) => {
-    await loadSlim(engine);
-  }, []);
-
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#050505]">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#020a07]">
       
-      {/* Subtle ambient warm glow at the bottom to simulate a fire source */}
-      <div className="absolute inset-x-0 bottom-[-20%] h-[50vh] bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-orange-900/20 via-transparent to-transparent z-0 blur-[50px]"></div>
+      {/* 1. Deep Forest Base Ambient Light */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#064e3b]/20 via-transparent to-transparent"></div>
 
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        className="absolute inset-0 z-10"
-        options={{
-          background: {
-            color: { value: "transparent" },
-          },
-          fpsLimit: 120,
-          particles: {
-            color: {
-              value: ["#ff5722", "#ff9800", "#ffc107", "#ffeb3b"], // Fire / Ember colors
-            },
-            move: {
-              direction: "top", // Embers float upwards
-              enable: true,
-              outModes: {
-                default: "out", // They disappear when they hit the top
-              },
-              random: true,
-              speed: { min: 0.5, max: 2 },
-              straight: false, // Slight random waving like real fire
-            },
-            number: {
-              density: {
-                enable: true,
-                area: 800,
-              },
-              value: 100, // Lots of small sparkles
-            },
-            opacity: {
-              value: { min: 0.1, max: 0.8 },
-              animation: {
-                enable: true,
-                speed: 1,
-                sync: false,
-              },
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              value: { min: 1, max: 4 },
-              animation: {
-                enable: true,
-                speed: 2,
-                sync: false,
-              },
-            },
-            // A slight glowing shadow on particles makes them look like embers
-            shadow: {
-              blur: 5,
-              color: {
-                value: "#ff9800",
-              },
-              enable: true,
-              offset: {
-                x: 0,
-                y: 0,
-              },
-            },
-          },
-          detectRetina: true,
+      {/* 2. Soft Top Emerald Spotlight (Left) */}
+      <div 
+        className="absolute top-[-30%] left-[-10%] w-[70vw] h-[70vh] opacity-30 mix-blend-screen pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(16, 185, 129, 0.3) 0%, transparent 70%)',
         }}
-      />
+      ></div>
+
+      {/* 3. Soft Top Mint Spotlight (Right) */}
+      <div 
+        className="absolute top-[-20%] right-[-10%] w-[60vw] h-[60vh] opacity-20 mix-blend-screen pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(52, 211, 153, 0.2) 0%, transparent 70%)',
+        }}
+      ></div>
+
+      {/* 4. Ultra Soft Center Glow for readable text contrast */}
+      <div 
+        className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[50vh] opacity-[0.05] mix-blend-screen pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, #a7f3d0 0%, transparent 60%)',
+        }}
+      ></div>
+
+      {/* 5. Pure Dark Grounding at bottom */}
+      <div className="absolute inset-x-0 bottom-0 h-[40vh] bg-gradient-to-t from-[#010503] to-transparent"></div>
     </div>
   );
 }
