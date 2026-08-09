@@ -29,7 +29,7 @@ export default function Education() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="text-4xl md:text-5xl font-bold tracking-tight mb-16 text-center text-faang-text"
         >
           Education
@@ -45,7 +45,7 @@ export default function Education() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.2, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="mb-8 pl-12 md:pl-20 relative group"
             >
               {/* Premium Timeline Dot */}

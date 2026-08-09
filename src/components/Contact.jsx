@@ -9,7 +9,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="text-4xl md:text-5xl font-bold tracking-tight mb-16 text-center text-faang-text"
         >
           Get In Touch
@@ -20,7 +20,7 @@ export default function Contact() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col justify-center"
           >
             <h3 className="text-4xl md:text-5xl font-bold mb-6 text-faang-text tracking-tight leading-tight">
@@ -56,7 +56,7 @@ export default function Contact() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="bento-card p-8 md:p-12 relative overflow-hidden border border-faang-border/50 shadow-2xl"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-faang-accent/10 rounded-full blur-[100px] pointer-events-none"></div>

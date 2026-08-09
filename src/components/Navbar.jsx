@@ -53,7 +53,7 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          <a href="#" className="text-xl font-bold tracking-tight text-faang-text relative z-[65]">
+          <a href="#" className="text-xl font-bold tracking-tight font-display text-faang-text relative z-[65]">
             Vanit Dantani
           </a>
 

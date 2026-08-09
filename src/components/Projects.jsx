@@ -33,7 +33,7 @@ export default function Projects() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="text-4xl md:text-5xl font-bold tracking-tight mb-16 text-center"
         >
           Selected Projects
@@ -46,7 +46,7 @@ export default function Projects() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.2, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="h-full"
             >
               <div className="bento-card relative overflow-hidden group flex flex-col border border-faang-border/50 hover:border-faang-accent/40 transition-colors duration-500 shadow-xl h-full">

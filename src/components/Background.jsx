@@ -8,7 +8,7 @@ export default function Background() {
   }, []);
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#0a0a0a]">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#050B14]">
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -48,7 +48,7 @@ export default function Background() {
               value: ["#0070f3", "#333333", "#ffffff"],
             },
             links: {
-              color: "#333333",
+              color: "#1e3a8a",
               distance: 150,
               enable: true,
               opacity: 0.4,
@@ -94,8 +94,11 @@ export default function Background() {
           detectRetina: true,
         }}
       />
-      {/* Decorative gradient overlay */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-faang-accent/5 via-transparent to-purple-900/10 mix-blend-screen" />
+      {/* Moonlight gradient overlay */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-[#050B14]/80 to-[#050B14] mix-blend-screen" />
+      
+      {/* Soft moon glow */}
+      <div className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-500/10 blur-[120px] pointer-events-none mix-blend-screen" />
     </div>
   );
 }

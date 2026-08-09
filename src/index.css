@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", "SF Pro Text", "Helvetica Neue", sans-serif;
+  --font-sans: "Space Grotesk", "SF Pro Text", "Helvetica Neue", sans-serif;
   --font-mono: "Fira Code", "JetBrains Mono", monospace;
+  --font-display: "Space Grotesk", sans-serif;
   
   /* FAANG Dark Theme Colors */
   --color-faang-bg: #0a0a0a;

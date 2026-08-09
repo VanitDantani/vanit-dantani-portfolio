@@ -9,7 +9,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl md:text-7xl font-bold tracking-tight text-balance mb-6 text-faang-text"
+          className="text-5xl md:text-7xl font-bold tracking-tight font-display text-balance mb-6 text-faang-text"
         >
           Building scalable <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-faang-accent to-purple-500">
@@ -34,13 +34,13 @@ export default function Hero() {
         >
           <a
             href="#projects"
-            className="w-full sm:w-auto px-8 py-3 rounded-md bg-faang-text text-faang-bg font-medium hover:bg-white/90 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)] text-center"
+            className="w-full sm:w-auto px-8 py-3 rounded-md bg-faang-text text-faang-bg font-display font-medium hover:bg-white/90 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)] text-center"
           >
             View Work
           </a>
           <a
             href="#contact"
-            className="w-full sm:w-auto px-8 py-3 rounded-md bg-faang-surface text-faang-text font-medium border border-faang-border hover:border-faang-text-muted transition-colors text-center"
+            className="w-full sm:w-auto px-8 py-3 rounded-md bg-faang-surface text-faang-text font-display font-medium border border-faang-border hover:border-faang-text-muted transition-colors text-center"
           >
             Contact
           </a>

@@ -24,7 +24,7 @@ export default function Experience() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="text-4xl md:text-5xl font-bold tracking-tight mb-16 text-center text-faang-text"
         >
           Experience
@@ -37,7 +37,7 @@ export default function Experience() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.2, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="bento-card p-8 md:p-10 group hover:border-faang-accent/40 transition-colors duration-500"
             >
               <div className="flex flex-col md:flex-row md:items-start gap-6 relative">

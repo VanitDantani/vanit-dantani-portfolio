@@ -8,9 +8,9 @@ export default function About() {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
       >
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-16 text-center text-faang-text">About Me</h2>
+        <h2 className="text-4xl md:text-5xl font-bold font-display tracking-tight mb-16 text-center text-faang-text">About Me</h2>
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-6xl mx-auto">
           {/* Profile Photo Card */}
@@ -33,11 +33,11 @@ export default function About() {
           <div className="lg:col-span-8 bento-card p-8 md:p-12 flex flex-col justify-center relative overflow-hidden group">
             <div className="absolute -right-32 -top-32 w-96 h-96 bg-faang-accent/10 rounded-full blur-3xl pointer-events-none group-hover:bg-faang-accent/20 transition-colors duration-700"></div>
             
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-faang-text mb-6 tracking-tight">
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display text-faang-text mb-6 tracking-tight">
               Hello! I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-faang-accent to-purple-500">Vanit Dantani</span>
             </h3>
             
-            <p className="text-lg md:text-xl text-faang-text-muted/90 leading-relaxed mb-12 font-light">
+            <p className="text-lg md:text-xl text-faang-text-muted leading-relaxed mb-12 font-display tracking-wide font-light">
               A Computer Engineering student pursuing my B.E. at Government Engineering College Modasa, with a Diploma in Computer Engineering from Government Polytechnic Gandhinagar. My journey began with web development through an internship at WayToWeb Pvt. Ltd., and I'm now working toward becoming an AI Engineer, drawn to building systems that solve real problems.
             </p>
             
