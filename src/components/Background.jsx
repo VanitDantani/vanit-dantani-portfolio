@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-// Helper component to render a beautiful 3D CSS Planet
-const CSSPlanet = ({ color1, color2, shadowColor, size, left, yTransform }) => (
+// Helper component to render a photorealistic planet using real images
+const ImagePlanet = ({ src, size, left, yTransform, rotation = 0, opacity = 1 }) => (
   <motion.div
-    className="absolute rounded-full z-10"
+    className="absolute z-10 flex items-center justify-center pointer-events-none"
     style={{
       width: size,
       height: size,
       left: left,
       y: yTransform,
-      background: `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`,
-      // Inner shadow gives a 3D spherical look, outer shadow gives an atmospheric glow
-      boxShadow: `inset -20px -20px 40px ${shadowColor}, 0 0 40px ${color1}40`,
-      filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.05))',
+      mixBlendMode: "screen", // Magically removes the black background from the space photos
+      opacity: opacity,
     }}
-  />
+  >
+    <img 
+      src={src} 
+      alt="Planet" 
+      className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+      style={{ transform: `rotate(${rotation}deg)` }}
+    />
+  </motion.div>
 );
 
 export default function Background() {
@@ -23,16 +28,15 @@ export default function Background() {
   const { scrollY } = useScroll();
   
   // Stars Parallax: Stars drift slowly downwards
-  const y1 = useTransform(scrollY, [0, 5000], [0, 400]);  // Back layer
-  const y2 = useTransform(scrollY, [0, 5000], [0, 800]);  // Middle layer
-  const y3 = useTransform(scrollY, [0, 5000], [0, 1500]); // Front layer
+  const y1 = useTransform(scrollY, [0, 5000], [0, 400]);
+  const y2 = useTransform(scrollY, [0, 5000], [0, 800]);
+  const y3 = useTransform(scrollY, [0, 5000], [0, 1500]);
 
   // Planets Parallax: Planets rise UP from the bottom as you scroll down.
-  // Window height is typically ~800px. Y=1000 means off-screen bottom, Y=-600 means off-screen top.
-  const planet1Y = useTransform(scrollY, [0, 1500], [150, -800]);     // Appears immediately (Hero section)
-  const planet2Y = useTransform(scrollY, [300, 2500], [1000, -800]);  // Appears around About/Skills
-  const planet3Y = useTransform(scrollY, [1500, 3500], [1000, -800]); // Appears around Projects
-  const planet4Y = useTransform(scrollY, [2500, 4500], [1000, -800]); // Appears around Education/Contact
+  const planet1Y = useTransform(scrollY, [0, 1500], [150, -800]);     // The Moon
+  const planet2Y = useTransform(scrollY, [300, 2500], [1000, -800]);  // Mars
+  const planet3Y = useTransform(scrollY, [1500, 3500], [1000, -800]); // Saturn
+  const planet4Y = useTransform(scrollY, [2500, 4500], [1000, -800]); // The Sun
 
   useEffect(() => {
     const generateStars = (count, sizeRange) => {
@@ -42,7 +46,7 @@ export default function Background() {
         left: Math.random() * 100 + "%",
         size: Math.random() * sizeRange[0] + sizeRange[1] + "px",
         animationDelay: Math.random() * 60 + "s",
-        animationDuration: Math.random() * 60 + 60 + "s", // 60 to 120s
+        animationDuration: Math.random() * 60 + 60 + "s",
       }));
     };
 
@@ -84,31 +88,36 @@ export default function Background() {
       <motion.div className="absolute inset-0" style={{ y: y2 }}>{renderLayer(starLayers.layer2)}</motion.div>
       <motion.div className="absolute inset-0" style={{ y: y3 }}>{renderLayer(starLayers.layer3)}</motion.div>
 
-      {/* 3. Parallax Planets (Moving UP as you scroll down) */}
+      {/* 3. Photorealistic Parallax Planets */}
       <div className="absolute inset-0 max-w-7xl mx-auto relative">
-        {/* Planet 1: Mars / Red Moon (Top Right) */}
-        <CSSPlanet 
-          color1="#ff9a9e" color2="#fecfef" shadowColor="#3a0000" 
-          size="120px" left="80%" yTransform={planet1Y} 
+        
+        {/* Planet 1: The Moon (Top Right) */}
+        <ImagePlanet 
+          src="https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg"
+          size="160px" left="75%" yTransform={planet1Y} 
+          opacity={0.8}
         />
         
-        {/* Planet 2: Neptune / Blue Giant (Middle Left) */}
-        <CSSPlanet 
-          color1="#4facfe" color2="#00f2fe" shadowColor="#000c40" 
-          size="280px" left="5%" yTransform={planet2Y} 
+        {/* Planet 2: Mars (Middle Left) */}
+        <ImagePlanet 
+          src="https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg"
+          size="240px" left="8%" yTransform={planet2Y} 
         />
 
-        {/* Planet 3: Golden / Orange Giant (Lower Right) */}
-        <CSSPlanet 
-          color1="#fa709a" color2="#fee140" shadowColor="#4a0000" 
-          size="350px" left="75%" yTransform={planet3Y} 
+        {/* Planet 3: Saturn (Lower Right) */}
+        <ImagePlanet 
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg"
+          size="550px" left="55%" yTransform={planet3Y} 
+          rotation={-15}
         />
 
-        {/* Planet 4: Mint / Green Planet (Bottom Left) */}
-        <CSSPlanet 
-          color1="#43e97b" color2="#38f9d7" shadowColor="#002a15" 
-          size="180px" left="15%" yTransform={planet4Y} 
+        {/* Planet 4: The Sun (Bottom Left) */}
+        <ImagePlanet 
+          src="https://upload.wikimedia.org/wikipedia/commons/b/b4/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg"
+          size="450px" left="2%" yTransform={planet4Y} 
+          opacity={0.9}
         />
+
       </div>
 
       {/* 4. Soft overlay gradient so text remains ultra-clear at the bottom */}
