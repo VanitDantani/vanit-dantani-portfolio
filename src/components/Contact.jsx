@@ -1,7 +1,39 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Globe, Code } from 'lucide-react';
 
 export default function Contact() {
+  const [result, setResult] = useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+
+    // Web3Forms Access Key
+    formData.append("access_key", "88b99e09-cdec-4328-91d3-ddc46127ef96");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult("Message Sent Successfully! 🎉");
+        event.target.reset();
+      } else {
+        console.log("Error", data);
+        setResult(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      setResult("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <section id="contact" className="section-padding bg-transparent">
       <div className="max-w-5xl mx-auto">
@@ -61,12 +93,14 @@ export default function Contact() {
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-faang-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
             
-            <form className="space-y-8 relative z-10" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-8 relative z-10" onSubmit={onSubmit}>
               <div className="space-y-2 group">
                 <label htmlFor="name" className="text-xs font-mono tracking-widest text-faang-text-muted uppercase group-focus-within:text-faang-accent transition-colors">Name</label>
                 <input
                   type="text"
                   id="name"
+                  name="name"
+                  required
                   className="w-full bg-transparent border-b border-faang-border focus:border-faang-accent py-3 text-faang-text outline-none transition-all placeholder:text-faang-text-muted/30"
                   placeholder="Enter your name"
                 />
@@ -77,6 +111,8 @@ export default function Contact() {
                 <input
                   type="email"
                   id="email"
+                  name="email"
+                  required
                   className="w-full bg-transparent border-b border-faang-border focus:border-faang-accent py-3 text-faang-text outline-none transition-all placeholder:text-faang-text-muted/30"
                   placeholder="Enter your email"
                 />
@@ -86,6 +122,8 @@ export default function Contact() {
                 <label htmlFor="message" className="text-xs font-mono tracking-widest text-faang-text-muted uppercase group-focus-within:text-faang-accent transition-colors">Message</label>
                 <textarea
                   id="message"
+                  name="message"
+                  required
                   rows="4"
                   className="w-full bg-transparent border-b border-faang-border focus:border-faang-accent py-3 text-faang-text outline-none transition-all placeholder:text-faang-text-muted/30 resize-none"
                   placeholder="Tell me about your project..."
@@ -98,6 +136,11 @@ export default function Contact() {
               >
                 Send Message
               </button>
+              {result && (
+                <p className="text-center font-mono text-sm mt-4 text-faang-text">
+                  {result}
+                </p>
+              )}
             </form>
           </motion.div>
         </div>
