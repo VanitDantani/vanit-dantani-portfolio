@@ -55,30 +55,30 @@ export default function Background() {
   );
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#000000]">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-faang-bg transition-colors duration-500">
       
-      {/* 1. Pure Pitch Black Background */}
-      <div className="absolute inset-0 bg-[#000000]"></div>
+      {/* 1. Base Background */}
+      <div className="absolute inset-0 bg-faang-bg transition-colors duration-500"></div>
 
       {/* 2. Parallax Star Layers (Moving DOWN on scroll) */}
       
       {/* Back Layer (Slowest) */}
-      <motion.div className="absolute inset-0" style={{ y: y1 }}>
+      <motion.div className="absolute inset-0 star-layer transition-opacity duration-500" style={{ y: y1 }}>
         {renderLayer(starLayers.layer1)}
       </motion.div>
 
       {/* Middle Layer */}
-      <motion.div className="absolute inset-0" style={{ y: y2 }}>
+      <motion.div className="absolute inset-0 star-layer transition-opacity duration-500" style={{ y: y2 }}>
         {renderLayer(starLayers.layer2)}
       </motion.div>
 
       {/* Front Layer (Fastest) */}
-      <motion.div className="absolute inset-0" style={{ y: y3 }}>
+      <motion.div className="absolute inset-0 star-layer transition-opacity duration-500" style={{ y: y3 }}>
         {renderLayer(starLayers.layer3)}
       </motion.div>
 
       {/* 3. Soft overlay gradient so text remains ultra-clear at the bottom */}
-      <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-[#000000] to-transparent z-20 pointer-events-none"></div>
+      <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-faang-bg to-transparent z-20 pointer-events-none transition-colors duration-500"></div>
     </div>
   );
 }

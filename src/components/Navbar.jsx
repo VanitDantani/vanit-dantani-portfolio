@@ -17,6 +17,14 @@ export default function Navbar() {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+    }
+  }, [isDarkMode]);
+
+  useEffect(() => {
     const handleScrollEvent = () => {
       setIsScrolled(window.scrollY > 50);
     };

@@ -57,7 +57,7 @@ export default function Footer() {
       
       {/* Huge Background Text */}
       <div className="absolute bottom-[-1rem] sm:bottom-[-2rem] md:bottom-[-6rem] left-0 w-full overflow-hidden flex justify-center pointer-events-none opacity-[0.04] select-none">
-        <span className="text-[5rem] sm:text-[8rem] md:text-[18rem] font-bold text-white whitespace-nowrap leading-none tracking-tighter">
+        <span className="text-[5rem] sm:text-[8rem] md:text-[18rem] font-bold text-faang-text whitespace-nowrap leading-none tracking-tighter">
           VANIT DANTANI
         </span>
       </div>

@@ -32,7 +32,7 @@
     100% { opacity: 0; transform: scale(0.5); }
   }
   
-  /* FAANG Dark Theme Colors */
+  /* FAANG Dark Theme Colors (Default) */
   --color-faang-bg: #0a0a0a;
   --color-faang-surface: #111111;
   --color-faang-surface-hover: #1a1a1a;
@@ -41,6 +41,22 @@
   --color-faang-text-muted: #888888;
   --color-faang-accent: #0070f3; /* Vercel Blue */
   --color-faang-accent-glow: rgba(0, 112, 243, 0.2);
+}
+
+.light {
+  /* FAANG Light Theme Colors */
+  --color-faang-bg: #f8fafc;
+  --color-faang-surface: #ffffff;
+  --color-faang-surface-hover: #f1f5f9;
+  --color-faang-border: #e2e8f0;
+  --color-faang-text: #0f172a;
+  --color-faang-text-muted: #64748b;
+  --color-faang-accent: #0070f3;
+  --color-faang-accent-glow: rgba(0, 112, 243, 0.1);
+}
+
+.light .star-layer {
+  opacity: 0 !important;
 }
 
 @layer base {
