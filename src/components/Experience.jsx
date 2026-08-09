@@ -5,7 +5,7 @@ const experienceData = [
   {
     title: 'Freelance Developer',
     company: 'Self-Employed',
-    duration: 'August 2024 – Present',
+    duration: 'July 2026 – Present',
     description: 'Designed and developed custom web applications and portfolios for clients. Handled end-to-end project lifecycles from initial UI/UX design to deployment.',
   },
   {
