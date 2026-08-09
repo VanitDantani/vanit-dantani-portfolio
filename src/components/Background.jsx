@@ -65,6 +65,31 @@ export default function Background() {
       {/* 1. Base Background */}
       <div className="absolute inset-0 bg-faang-bg transition-colors duration-500"></div>
 
+      {/* 1.5. Light Mode Specific Background (Grid + Blobs) */}
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-500 light-bg-layer">
+        {/* Subtle Grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.03] animate-grid-flow"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z' fill='%23000000' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+            backgroundSize: '40px 40px'
+          }}
+        ></div>
+        
+        {/* Floating Blurry Orbs */}
+        <motion.div 
+          animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-faang-accent/15 rounded-full blur-[100px] pointer-events-none"
+        ></motion.div>
+        
+        <motion.div 
+          animate={{ x: [0, -100, 0], y: [0, -50, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none"
+        ></motion.div>
+      </div>
+
       {/* 2. Parallax Star Layers (Moving DOWN on scroll) */}
       
       {/* Back Layer (Slowest) */}
