@@ -23,11 +23,13 @@
     100% { background-position: 0 80px; }
   }
 
-  --animate-twinkle: twinkle 3s ease-in-out infinite;
+  --animate-twinkle: twinkle 8s ease-in-out infinite;
 
   @keyframes twinkle {
-    0%, 100% { opacity: 0.2; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
+    0% { opacity: 0; transform: scale(0.5); }
+    15% { opacity: 1; transform: scale(1.5); }
+    30% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 0; transform: scale(0.5); }
   }
   
   /* FAANG Dark Theme Colors */
