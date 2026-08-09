@@ -83,35 +83,34 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Theme Toggle Button (Premium Squircle) */}
+            {/* Modern Pill Theme Toggle */}
             <button
-              className="w-10 h-10 flex items-center justify-center rounded-[12px] bg-faang-surface/50 border border-faang-border hover:border-faang-accent/50 hover:bg-faang-surface text-faang-text-muted hover:text-faang-accent transition-all duration-300 shadow-sm overflow-hidden"
               onClick={() => setIsDarkMode(!isDarkMode)}
+              className="relative flex items-center w-16 h-8 rounded-full bg-faang-surface border border-faang-border p-1 cursor-pointer transition-all duration-300 shadow-inner group hover:border-faang-text-muted"
               aria-label="Toggle theme"
             >
-              <AnimatePresence mode="wait">
-                {isDarkMode ? (
-                  <motion.div
-                    key="sun"
-                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
-                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Sun size={18} strokeWidth={2.5} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="moon"
-                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
-                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Moon size={18} strokeWidth={2.5} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* Sliding Circle with Active Icon */}
+              <div 
+                className={`absolute w-6 h-6 rounded-full bg-faang-accent shadow-[0_0_10px_rgba(0,112,243,0.5)] transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) flex items-center justify-center z-10 ${isDarkMode ? 'translate-x-0' : 'translate-x-8'}`}
+              >
+                <AnimatePresence mode="wait">
+                  {isDarkMode ? (
+                    <motion.div key="moon-active" initial={{ opacity: 0, rotate: -90 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: 90 }} transition={{ duration: 0.2 }}>
+                      <Moon size={14} className="text-white" strokeWidth={2.5} />
+                    </motion.div>
+                  ) : (
+                    <motion.div key="sun-active" initial={{ opacity: 0, rotate: -90 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: 90 }} transition={{ duration: 0.2 }}>
+                      <Sun size={14} className="text-white" strokeWidth={2.5} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Background Inactive Icons */}
+              <div className="flex justify-between w-full px-1.5 z-0">
+                <Moon size={14} className="text-faang-text-muted opacity-40 group-hover:opacity-60 transition-opacity" />
+                <Sun size={14} className="text-faang-text-muted opacity-40 group-hover:opacity-60 transition-opacity" />
+              </div>
             </button>
 
             {/* Mobile Nav Toggle */}

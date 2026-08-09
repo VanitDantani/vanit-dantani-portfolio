@@ -65,35 +65,23 @@ export default function Background() {
       {/* 1. Base Background */}
       <div className="absolute inset-0 bg-faang-bg transition-colors duration-500"></div>
 
-      {/* 1.5. Light Mode Specific Background (Grid + Blobs) */}
-      <div className="absolute inset-0 opacity-0 transition-opacity duration-700 light-bg-layer">
-        {/* Visible Grid */}
+      {/* 1.5. Light Mode Specific Background (Mesh Gradient + Grid) */}
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-700 light-bg-layer bg-[#f8fafc]">
+        {/* Beautiful Mesh Gradient (Highly Visible) */}
+        <div className="absolute inset-0 opacity-80">
+          <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-r from-blue-200 to-cyan-100 blur-[100px] animate-pulse" style={{ animationDuration: '8s' }}></div>
+          <div className="absolute bottom-[-20%] right-[-10%] w-[70vw] h-[70vw] rounded-full bg-gradient-to-r from-purple-200 to-pink-100 blur-[120px] animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }}></div>
+          <div className="absolute top-[20%] left-[40%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-r from-emerald-100 to-teal-100 blur-[90px] animate-pulse" style={{ animationDuration: '12s', animationDelay: '1s' }}></div>
+        </div>
+        
+        {/* Crisp Dotted Grid Overlay */}
         <div 
-          className="absolute inset-0 opacity-20 animate-grid-flow"
+          className="absolute inset-0 opacity-30"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z' fill='%23000000' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-            backgroundSize: '40px 40px'
+            backgroundImage: `radial-gradient(#94a3b8 1.5px, transparent 1.5px)`,
+            backgroundSize: '24px 24px'
           }}
         ></div>
-        
-        {/* Highly Visible Floating Orbs */}
-        <motion.div 
-          animate={{ x: [0, 150, 0], y: [0, 100, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-faang-accent/40 rounded-full blur-[120px] pointer-events-none mix-blend-multiply"
-        ></motion.div>
-        
-        <motion.div 
-          animate={{ x: [0, -150, 0], y: [0, -100, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[-10%] right-[-10%] w-[900px] h-[900px] bg-purple-500/30 rounded-full blur-[150px] pointer-events-none mix-blend-multiply"
-        ></motion.div>
-        
-        <motion.div 
-          animate={{ x: [0, 50, 0], y: [0, -150, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[40%] left-[60%] w-[600px] h-[600px] bg-pink-400/30 rounded-full blur-[120px] pointer-events-none mix-blend-multiply"
-        ></motion.div>
       </div>
 
       {/* 2. Parallax Star Layers (Moving DOWN on scroll) */}
