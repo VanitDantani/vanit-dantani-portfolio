@@ -20,8 +20,8 @@ export default function Background() {
         top: Math.random() * 250 - 50 + "%", 
         left: Math.random() * 100 + "%",
         size: Math.random() * sizeRange[0] + sizeRange[1] + "px",
-        animationDelay: Math.random() * 20 + "s",
-        animationDuration: Math.random() * 15 + 10 + "s", // 10 to 25 seconds per cycle
+        animationDelay: Math.random() * 4 + "s",
+        animationDuration: Math.random() * 2 + 3 + "s", // 3 to 5 seconds per cycle
       }));
     };
 
