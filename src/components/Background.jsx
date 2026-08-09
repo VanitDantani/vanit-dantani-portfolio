@@ -40,6 +40,11 @@ export default function Background() {
         <span
           key={star.id}
           className="absolute rounded-full bg-white animate-twinkle"
+          onAnimationIteration={(e) => {
+            // Instantly move the star to a new position while it is at opacity 0 (end of animation cycle)
+            e.target.style.top = Math.random() * 250 - 50 + "%";
+            e.target.style.left = Math.random() * 100 + "%";
+          }}
           style={{
             top: star.top,
             left: star.left,
