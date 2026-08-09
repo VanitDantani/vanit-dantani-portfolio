@@ -44,10 +44,10 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-faang-border/30 gap-6 md:gap-4">
-          <p className="text-sm font-mono text-faang-text-muted">
+          <p className="text-sm font-medium text-faang-text-muted">
             © {new Date().getFullYear()} Vanit Dantani. All rights reserved.
           </p>
-          <div className="flex items-center gap-1 text-sm font-mono text-faang-text-muted">
+          <div className="flex items-center gap-1 text-sm font-medium text-faang-text-muted">
             <span>Made with</span>
             <span className="text-red-500 mx-1">❤️</span>
             <span>by Vanit Dantani</span>
