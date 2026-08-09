@@ -1,75 +1,48 @@
-import { useCallback } from "react";
-import Particles from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim";
+import { useEffect, useState } from "react";
 
 export default function Background() {
-  const particlesInit = useCallback(async (engine) => {
-    await loadSlim(engine);
+  const [stars, setStars] = useState([]);
+
+  useEffect(() => {
+    // Generate 150 random stars for a dense space effect
+    const newStars = Array.from({ length: 150 }).map(() => ({
+      id: Math.random().toString(36).substring(7),
+      top: Math.random() * 100 + "%",
+      left: Math.random() * 100 + "%",
+      size: Math.random() * 2 + 1 + "px", // Varying small sizes
+      animationDelay: Math.random() * 5 + "s",
+      animationDuration: Math.random() * 4 + 3 + "s", // Random twinkle speeds
+    }));
+    setStars(newStars);
   }, []);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#000000]">
       
-      {/* Pure Black Background */}
+      {/* 1. Pure Pitch Black Background */}
       <div className="absolute inset-0 bg-[#000000]"></div>
 
-      {/* Classic Space Stars using tsParticles */}
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        className="absolute inset-0 z-10"
-        options={{
-          background: {
-            color: { value: "transparent" },
-          },
-          fpsLimit: 120,
-          particles: {
-            color: {
-              value: "#ffffff", // Pure white stars
-            },
-            move: {
-              direction: "none", // Drift in all directions
-              enable: true,
-              outModes: {
-                default: "out",
-              },
-              random: true,
-              speed: 0.2, // Very slow realistic drifting
-              straight: false,
-            },
-            number: {
-              density: {
-                enable: true,
-                area: 800,
-              },
-              value: 150, // Dense starfield
-            },
-            opacity: {
-              value: { min: 0.1, max: 1 },
-              animation: {
-                enable: true,
-                speed: 1.5, // Twinkling effect
-                sync: false,
-              },
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              value: { min: 0.5, max: 2 }, // Tiny, realistic star sizes
-              animation: {
-                enable: true,
-                speed: 2,
-                sync: false,
-              },
-            },
-          },
-          detectRetina: true,
-        }}
-      />
-      
-      {/* Soft overlay gradient so text remains ultra-clear at the bottom */}
-      <div className="absolute inset-x-0 bottom-0 h-[20vh] bg-gradient-to-t from-[#000000] to-transparent z-20 pointer-events-none"></div>
+      {/* 2. Pure React Twinkling Stars (No external libraries, 100% reliable) */}
+      <div className="absolute inset-0">
+        {stars.map((star) => (
+          <span
+            key={star.id}
+            className="absolute rounded-full bg-white animate-twinkle"
+            style={{
+              top: star.top,
+              left: star.left,
+              width: star.size,
+              height: star.size,
+              animationDelay: star.animationDelay,
+              animationDuration: star.animationDuration,
+              boxShadow: "0 0 4px 1px rgba(255, 255, 255, 0.4)" // Soft glow around stars
+            }}
+          />
+        ))}
+      </div>
+
+      {/* 3. Soft overlay gradient so text remains ultra-clear at the bottom */}
+      <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-[#000000] to-transparent z-20 pointer-events-none"></div>
     </div>
   );
 }
