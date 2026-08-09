@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 
 const navItems = [
   { name: 'About', href: '#about' },
@@ -14,6 +14,7 @@ const navItems = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
     const handleScrollEvent = () => {
@@ -57,36 +58,70 @@ export default function Navbar() {
             Vanit Dantani
           </a>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="relative text-sm font-mono text-faang-text-muted hover:text-faang-text transition-colors group py-2"
-              >
-                {item.name}
-                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-faang-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-center duration-300 ease-out shadow-[0_0_8px_rgba(0,112,243,0.8)] rounded-full"></span>
-              </a>
-            ))}
-          </div>
+          {/* Right Side: Desktop Nav & Actions */}
+          <div className="flex items-center gap-4 relative z-[65]">
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center space-x-8 mr-4">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="relative text-sm font-medium text-faang-text-muted hover:text-faang-text transition-colors group py-2"
+                >
+                  {item.name}
+                  <span className="absolute left-0 bottom-0 w-full h-[2px] bg-faang-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-center duration-300 ease-out shadow-[0_0_8px_rgba(0,112,243,0.8)] rounded-full"></span>
+                </a>
+              ))}
+            </div>
 
-          {/* Mobile Nav Toggle */}
-          <button
-            className="md:hidden relative z-[65] w-10 h-10 flex items-center justify-center rounded-full bg-faang-surface border border-faang-border text-faang-text hover:border-faang-accent hover:text-faang-accent transition-all shadow-sm"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <motion.div
-              key={isMobileMenuOpen ? "close" : "open"}
-              initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
-              animate={{ opacity: 1, rotate: 0, scale: 1 }}
-              transition={{ duration: 0.2 }}
+            {/* Theme Toggle Button (Premium Squircle) */}
+            <button
+              className="w-10 h-10 flex items-center justify-center rounded-[12px] bg-faang-surface/50 border border-faang-border hover:border-faang-accent/50 hover:bg-faang-surface text-faang-text-muted hover:text-faang-accent transition-all duration-300 shadow-sm overflow-hidden"
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              aria-label="Toggle theme"
             >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </motion.div>
-          </button>
+              <AnimatePresence mode="wait">
+                {isDarkMode ? (
+                  <motion.div
+                    key="sun"
+                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Sun size={18} strokeWidth={2.5} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="moon"
+                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Moon size={18} strokeWidth={2.5} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
+
+            {/* Mobile Nav Toggle */}
+            <button
+              className="md:hidden w-10 h-10 flex items-center justify-center rounded-[12px] bg-faang-surface/50 border border-faang-border text-faang-text hover:border-faang-accent/50 hover:text-faang-accent transition-all shadow-sm"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <motion.div
+                key={isMobileMenuOpen ? "close" : "open"}
+                initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </motion.div>
+            </button>
+          </div>
         </div>
 
         {/* Glowing Blurry Bottom Line (Always Visible) */}
