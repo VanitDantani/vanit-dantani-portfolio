@@ -12,6 +12,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Background from './components/Background';
+import CustomCursor from './components/CustomCursor';
 
 function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <div className="relative min-h-screen text-faang-text font-sans selection:bg-faang-accent selection:text-white overflow-x-hidden w-full">
+      <CustomCursor />
       <Background />
       <Navbar />
       <main className="relative z-10">
