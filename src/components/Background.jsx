@@ -1,44 +1,90 @@
+import { useEffect, useState } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+
 export default function Background() {
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setInit(true);
+    });
+  }, []);
+
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#000000]">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#050505]">
       
-      {/* 1. Subtle Premium Dot Grid (Fades out at the bottom) */}
-      <div 
-        className="absolute inset-0 opacity-[0.25]" 
-        style={{
-          backgroundImage: 'radial-gradient(circle at center, #ffffff 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-          maskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)',
-        }}
-      ></div>
+      {/* Subtle ambient warm glow at the bottom to simulate a fire source */}
+      <div className="absolute inset-x-0 bottom-[-20%] h-[50vh] bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-orange-900/20 via-transparent to-transparent z-0 blur-[50px]"></div>
 
-      {/* 2. Top Spotlight Gradient (Blue/Cyan) */}
-      <div 
-        className="absolute top-[-30%] left-[-10%] w-[60vw] h-[60vh] opacity-30 mix-blend-screen pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, rgba(0, 112, 243, 0.5) 0%, transparent 70%)',
-        }}
-      ></div>
-
-      {/* 3. Top Spotlight Gradient (Purple/Magenta) */}
-      <div 
-        className="absolute top-[-30%] right-[-10%] w-[60vw] h-[60vh] opacity-25 mix-blend-screen pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, rgba(121, 40, 202, 0.5) 0%, transparent 70%)',
-        }}
-      ></div>
-
-      {/* 4. Ultra Soft Center Glow to highlight the Hero Section */}
-      <div 
-        className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[60vw] h-[40vh] opacity-10 mix-blend-screen pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, #ffffff 0%, transparent 60%)',
-        }}
-      ></div>
-
-      {/* 5. Pure Black gradient at the bottom so the footer is completely clean */}
-      <div className="absolute inset-x-0 bottom-0 h-[40vh] bg-gradient-to-t from-[#000000] to-transparent"></div>
+      {init && (
+        <Particles
+          id="tsparticles"
+          className="absolute inset-0 z-10"
+          options={{
+            background: {
+              color: { value: "transparent" },
+            },
+            fpsLimit: 120,
+            particles: {
+              color: {
+                value: ["#ff5722", "#ff9800", "#ffc107", "#ffeb3b"], // Fire / Ember colors
+              },
+              move: {
+                direction: "top", // Embers float upwards
+                enable: true,
+                outModes: {
+                  default: "out", // They disappear when they hit the top
+                },
+                random: true,
+                speed: { min: 0.5, max: 2 },
+                straight: false, // Slight random waving like real fire
+              },
+              number: {
+                density: {
+                  enable: true,
+                  area: 800,
+                },
+                value: 100, // Lots of small sparkles
+              },
+              opacity: {
+                value: { min: 0.1, max: 0.8 },
+                animation: {
+                  enable: true,
+                  speed: 1,
+                  sync: false,
+                },
+              },
+              shape: {
+                type: "circle",
+              },
+              size: {
+                value: { min: 1, max: 4 },
+                animation: {
+                  enable: true,
+                  speed: 2,
+                  sync: false,
+                },
+              },
+              // A slight glowing shadow on particles makes them look like embers
+              shadow: {
+                blur: 5,
+                color: {
+                  value: "#ff9800",
+                },
+                enable: true,
+                offset: {
+                  x: 0,
+                  y: 0,
+                },
+              },
+            },
+            detectRetina: true,
+          }}
+        />
+      )}
     </div>
   );
 }
