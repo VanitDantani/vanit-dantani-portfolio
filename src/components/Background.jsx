@@ -1,20 +1,58 @@
 import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Background() {
-  const [stars, setStars] = useState([]);
+  const [starLayers, setStarLayers] = useState({ layer1: [], layer2: [], layer3: [] });
+  const { scrollY } = useScroll();
+  
+  // Parallax transforms: As user scrolls down, scrollY increases. 
+  // We map scrollY to positive 'y' values so the stars literally move DOWN the screen.
+  const y1 = useTransform(scrollY, [0, 5000], [0, 400]);  // Back layer (moves slow)
+  const y2 = useTransform(scrollY, [0, 5000], [0, 800]);  // Middle layer (moves medium)
+  const y3 = useTransform(scrollY, [0, 5000], [0, 1500]); // Front layer (moves fast)
 
   useEffect(() => {
-    // Generate 150 random stars for a dense space effect
-    const newStars = Array.from({ length: 150 }).map(() => ({
-      id: Math.random().toString(36).substring(7),
-      top: Math.random() * 100 + "%",
-      left: Math.random() * 100 + "%",
-      size: Math.random() * 2 + 1 + "px", // Varying small sizes
-      animationDelay: Math.random() * 5 + "s",
-      animationDuration: Math.random() * 4 + 3 + "s", // Random twinkle speeds
-    }));
-    setStars(newStars);
+    // Helper function to generate stars
+    const generateStars = (count, sizeRange) => {
+      return Array.from({ length: count }).map(() => ({
+        id: Math.random().toString(36).substring(7),
+        // Spread stars vertically from -50% to 200% so we don't run out of stars when they move down
+        top: Math.random() * 250 - 50 + "%", 
+        left: Math.random() * 100 + "%",
+        size: Math.random() * sizeRange[0] + sizeRange[1] + "px",
+        animationDelay: Math.random() * 5 + "s",
+        animationDuration: Math.random() * 4 + 3 + "s",
+      }));
+    };
+
+    // Generate 3 distinct layers of stars for a realistic 3D depth effect
+    setStarLayers({
+      layer1: generateStars(100, [0.5, 0.5]), // Tiny distant stars
+      layer2: generateStars(60, [1, 1.5]),    // Medium stars
+      layer3: generateStars(40, [1.5, 2.5])   // Large close stars
+    });
   }, []);
+
+  // Reusable component to render a layer
+  const renderLayer = (stars) => (
+    <>
+      {stars.map((star) => (
+        <span
+          key={star.id}
+          className="absolute rounded-full bg-white animate-twinkle"
+          style={{
+            top: star.top,
+            left: star.left,
+            width: star.size,
+            height: star.size,
+            animationDelay: star.animationDelay,
+            animationDuration: star.animationDuration,
+            boxShadow: "0 0 4px 1px rgba(255, 255, 255, 0.4)" // Soft glow
+          }}
+        />
+      ))}
+    </>
+  );
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#000000]">
@@ -22,24 +60,22 @@ export default function Background() {
       {/* 1. Pure Pitch Black Background */}
       <div className="absolute inset-0 bg-[#000000]"></div>
 
-      {/* 2. Pure React Twinkling Stars (No external libraries, 100% reliable) */}
-      <div className="absolute inset-0">
-        {stars.map((star) => (
-          <span
-            key={star.id}
-            className="absolute rounded-full bg-white animate-twinkle"
-            style={{
-              top: star.top,
-              left: star.left,
-              width: star.size,
-              height: star.size,
-              animationDelay: star.animationDelay,
-              animationDuration: star.animationDuration,
-              boxShadow: "0 0 4px 1px rgba(255, 255, 255, 0.4)" // Soft glow around stars
-            }}
-          />
-        ))}
-      </div>
+      {/* 2. Parallax Star Layers (Moving DOWN on scroll) */}
+      
+      {/* Back Layer (Slowest) */}
+      <motion.div className="absolute inset-0" style={{ y: y1 }}>
+        {renderLayer(starLayers.layer1)}
+      </motion.div>
+
+      {/* Middle Layer */}
+      <motion.div className="absolute inset-0" style={{ y: y2 }}>
+        {renderLayer(starLayers.layer2)}
+      </motion.div>
+
+      {/* Front Layer (Fastest) */}
+      <motion.div className="absolute inset-0" style={{ y: y3 }}>
+        {renderLayer(starLayers.layer3)}
+      </motion.div>
 
       {/* 3. Soft overlay gradient so text remains ultra-clear at the bottom */}
       <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-[#000000] to-transparent z-20 pointer-events-none"></div>
