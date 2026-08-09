@@ -47,19 +47,19 @@ export default function Background() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#010604]">
       
-      {/* 1. Real Forest Background Image - Heavily Blurred */}
+      {/* 1. Real Forest Drone Shot - Tiny Blur */}
       <div 
-        className="absolute inset-[-10%] bg-cover bg-center bg-no-repeat opacity-50"
+        className="absolute inset-[-5%] bg-cover bg-center bg-no-repeat opacity-70"
         style={{
-          // High-quality dark misty forest image from Unsplash
-          backgroundImage: 'url("https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2532&auto=format&fit=crop")',
-          filter: 'blur(16px)', // Heavy blur as requested
-          transform: 'scale(1.1)' // Prevent blurred edges from showing white
+          // Drone/Aerial shot of dense dark green forest canopy
+          backgroundImage: 'url("https://images.unsplash.com/photo-1473448912268-2022ce9509d8?q=80&w=2500&auto=format&fit=crop")',
+          filter: 'blur(3px)', // Tiny blur as requested
+          transform: 'scale(1.05)' // Prevent blurred edges from showing white
         }}
       ></div>
 
-      {/* 2. Dark Overlay to ensure text readability */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      {/* 2. Dark Overlay to ensure text readability (crucial since the image is clear) */}
+      <div className="absolute inset-0 bg-black/75"></div>
 
       {/* 3. Magical Floating Dust / Wand Vibe */}
       <MagicDust number={30} />
