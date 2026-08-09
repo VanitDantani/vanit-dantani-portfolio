@@ -1,44 +1,62 @@
-import { motion } from 'framer-motion';
+import { useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function Background() {
-  return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#000000]">
-      {/* 1. Subtle Grid Pattern - Fades out towards edges */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-      
-      {/* 2. Slow breathing Mesh Gradient Orbs (Framer Motion) */}
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-          x: [0, 50, 0]
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-900/30 blur-[150px] mix-blend-screen" 
-      />
-      
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.5, 1],
-          opacity: [0.2, 0.4, 0.2],
-          x: [0, -50, 0]
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-purple-900/20 blur-[150px] mix-blend-screen" 
-      />
+  const cursorX = useMotionValue(-1000);
+  const cursorY = useMotionValue(-1000);
+  
+  // Spring configuration for ultra-smooth buttery movement
+  const springConfig = { damping: 40, stiffness: 150, mass: 0.8 };
+  const smoothX = useSpring(cursorX, springConfig);
+  const smoothY = useSpring(cursorY, springConfig);
 
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.3, 1],
-          opacity: [0.1, 0.3, 0.1],
-          y: [0, -50, 0]
+  useEffect(() => {
+    // Set initial position to center of screen
+    cursorX.set(window.innerWidth / 2);
+    cursorY.set(window.innerHeight / 2);
+
+    const moveCursor = (e) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+    };
+  }, [cursorX, cursorY]);
+
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-[#030305]">
+      {/* 1. Deep Space Base Gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-[#030305] to-[#030305]"></div>
+      
+      {/* 2. Premium Dot Matrix Pattern with fade out mask */}
+      <div 
+        className="absolute inset-0 opacity-[0.15]" 
+        style={{
+          backgroundImage: 'radial-gradient(circle at center, #ffffff 1px, transparent 1.5px)',
+          backgroundSize: '36px 36px',
+          maskImage: 'linear-gradient(to bottom, black 20%, transparent 90%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 90%)',
         }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[-20%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-indigo-900/20 blur-[150px] mix-blend-screen" 
+      ></div>
+
+      {/* 3. Interactive Cursor Spotlight (Hidden on very small screens, smooth spring animation) */}
+      <motion.div
+        className="hidden md:block absolute top-0 left-0 w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full blur-[100px] mix-blend-screen pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(0,112,243,0.25) 0%, rgba(121,40,202,0.1) 40%, transparent 70%)',
+          x: smoothX,
+          y: smoothY,
+          translateX: "-50%",
+          translateY: "-50%"
+        }}
       />
       
-      {/* 3. Noise/Grain Texture Overlay for that premium Vercel/Apple feel */}
-      <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
+      {/* 4. Ambient Static Glows (for atmosphere and mobile fallback) */}
+      <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/10 blur-[130px] mix-blend-screen pointer-events-none animate-pulse" style={{ animationDuration: '7s' }} />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-purple-700/10 blur-[130px] mix-blend-screen pointer-events-none animate-pulse" style={{ animationDuration: '10s' }} />
     </div>
   );
 }
