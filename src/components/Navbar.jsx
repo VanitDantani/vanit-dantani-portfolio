@@ -89,12 +89,12 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Glowing Blurry Bottom Line */}
+        {/* Glowing Blurry Bottom Line (Always Visible) */}
         <div 
-          className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-faang-accent to-transparent transition-opacity duration-500 blur-[2px] ${isScrolled || isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+          className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-faang-accent to-transparent transition-opacity duration-500 blur-[2px] opacity-100"
         ></div>
         <div 
-          className={`absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-400 to-transparent transition-opacity duration-500 ${isScrolled || isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+          className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-400 to-transparent transition-opacity duration-500 opacity-100"
         ></div>
       </motion.nav>
 
