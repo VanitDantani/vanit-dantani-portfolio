@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { MapPin, GraduationCap } from 'lucide-react';
+import profilePic from '../assets/profile.png';
 
 export default function About() {
   return (
@@ -19,8 +20,8 @@ export default function About() {
             <div className="absolute inset-0 bg-gradient-to-br from-faang-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
             
             {/* Circular Image Container */}
-            <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden relative z-10 shadow-2xl border-4 border-faang-border group-hover:border-faang-accent/50 transition-colors duration-500 bg-faang-surface flex items-center justify-center">
-              <span className="text-faang-text-muted font-mono text-sm">Photo coming soon</span>
+            <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden relative z-10 shadow-2xl border-4 border-faang-border group-hover:border-faang-accent/50 transition-colors duration-500">
+              <img src={profilePic} alt="Vanit Dantani" className="w-full h-full object-cover" />
             </div>
           </div>
 
