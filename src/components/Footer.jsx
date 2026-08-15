@@ -43,31 +43,35 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-faang-border/30 gap-6 md:gap-4">
-          <p className="text-sm font-medium text-faang-text-muted text-center md:text-left">
-            © {new Date().getFullYear()} Vanit Dantani. All rights reserved.
-          </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6 pt-8 border-t border-faang-border/30">
           
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+          <div className="flex justify-center md:justify-start order-2 md:order-1">
+            <p className="text-sm font-medium text-faang-text-muted">
+              © {new Date().getFullYear()} Vanit Dantani. All rights reserved.
+            </p>
+          </div>
+          
+          <div className="flex justify-center order-1 md:order-2">
             <div className="flex items-center gap-1 text-sm font-medium text-faang-text-muted">
               <span>Made with</span>
               <span className="text-red-500 mx-1">❤️</span>
               <span>by Vanit Dantani</span>
             </div>
-            
-            <div className="hidden sm:block w-px h-4 bg-faang-border"></div>
-            
+          </div>
+          
+          <div className="flex justify-center md:justify-end order-3 md:order-3">
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent/50 transition-colors group shadow-sm">
-              <Eye size={14} className="text-faang-text-muted group-hover:text-faang-accent transition-colors" />
-              <div className="flex items-center opacity-70 group-hover:opacity-100 transition-opacity grayscale">
+              <Eye size={16} className="text-faang-text-muted group-hover:text-faang-accent transition-colors" />
+              <div className="flex items-center opacity-70 group-hover:opacity-100 transition-opacity grayscale overflow-hidden">
                 <img 
-                  src="https://komarev.com/ghpvc/?username=vanitdantani-portfolio&label=VIEWS&color=27272a&style=flat-square" 
+                  src="https://komarev.com/ghpvc/?username=vanitdantani-portfolio&label=%20&color=27272a&style=flat-square" 
                   alt="Visitor Count" 
-                  className="h-4" 
+                  className="h-4 -ml-[22px] max-w-none" 
                 />
               </div>
             </div>
           </div>
+
         </div>
       </div>
       
