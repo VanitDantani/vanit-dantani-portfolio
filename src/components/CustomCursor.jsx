@@ -42,18 +42,6 @@ export default function CustomCursor() {
           boxShadow: "0 0 15px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0,0,0,0.3)",
         }}
       />
-      
-      {/* Large trailing gradient aura */}
-      <motion.div
-        className="fixed top-0 left-0 w-[400px] h-[400px] rounded-full pointer-events-none z-[9998] mix-blend-screen hidden md:block"
-        style={{
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255,255,255,0) 50%)',
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%"
-        }}
-      />
     </>
   );
 }
