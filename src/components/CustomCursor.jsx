@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { Moon } from "lucide-react";
 
 export default function CustomCursor() {
   const [isMounted, setIsMounted] = useState(false);
@@ -29,17 +30,19 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Small exact glowing dot on the cursor */}
+      {/* Small exact glowing moon on the cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-faang-accent pointer-events-none z-[9999] mix-blend-screen hidden md:block"
+        className="fixed top-0 left-0 text-faang-accent pointer-events-none z-[9999] mix-blend-screen hidden md:block flex items-center justify-center"
         style={{
           x: mouseX,
           y: mouseY,
           translateX: "-50%",
           translateY: "-50%",
-          boxShadow: "0 0 10px 2px var(--color-faang-accent)",
+          filter: "drop-shadow(0 0 6px var(--color-faang-accent))",
         }}
-      />
+      >
+        <Moon size={14} strokeWidth={2.5} fill="currentColor" />
+      </motion.div>
       
       {/* Large trailing gradient aura */}
       <motion.div
