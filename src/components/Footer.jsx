@@ -44,20 +44,26 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-faang-border/30 gap-6 md:gap-4">
-          <p className="text-sm font-medium text-faang-text-muted">
+          <p className="text-sm font-medium text-faang-text-muted text-center md:text-left">
             © {new Date().getFullYear()} Vanit Dantani. All rights reserved.
           </p>
-          <div className="flex items-center">
-            <img 
-              src="https://api.visitorbadge.io/api/visitors?path=vanit.dantani.portfolio&label=VISITORS&labelColor=%2318181b&countColor=%238b5cf6" 
-              alt="Visitor Count" 
-              className="h-5 opacity-80 hover:opacity-100 transition-opacity rounded-sm shadow-sm" 
-            />
-          </div>
-          <div className="flex items-center gap-1 text-sm font-medium text-faang-text-muted">
-            <span>Made with</span>
-            <span className="text-red-500 mx-1">❤️</span>
-            <span>by Vanit Dantani</span>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+            <div className="flex items-center opacity-40 hover:opacity-100 transition-opacity grayscale">
+              <img 
+                src="https://komarev.com/ghpvc/?username=vanitdantani-portfolio&label=VIEWS&color=27272a&style=flat-square" 
+                alt="Visitor Count" 
+                className="h-5 rounded-sm shadow-sm" 
+              />
+            </div>
+            
+            <div className="hidden sm:block w-px h-4 bg-faang-border"></div>
+            
+            <div className="flex items-center gap-1 text-sm font-medium text-faang-text-muted">
+              <span>Made with</span>
+              <span className="text-red-500 mx-1">❤️</span>
+              <span>by Vanit Dantani</span>
+            </div>
           </div>
         </div>
       </div>
