@@ -32,23 +32,22 @@ export default function CustomCursor() {
     <>
       {/* Small exact glowing moon on the cursor */}
       <motion.div
-        className="fixed top-0 left-0 text-faang-accent pointer-events-none z-[9999] mix-blend-screen hidden md:block flex items-center justify-center"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-screen hidden md:block w-[14px] h-[14px] rounded-full"
         style={{
           x: mouseX,
           y: mouseY,
           translateX: "-50%",
           translateY: "-50%",
-          filter: "drop-shadow(0 0 6px var(--color-faang-accent))",
+          background: "radial-gradient(circle at 35% 35%, #ffffff 0%, #fdfbd3 40%, #e0ded0 80%, #a3a182 100%)",
+          boxShadow: "0 0 15px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0,0,0,0.3)",
         }}
-      >
-        <Moon size={14} strokeWidth={2.5} fill="currentColor" />
-      </motion.div>
+      />
       
       {/* Large trailing gradient aura */}
       <motion.div
         className="fixed top-0 left-0 w-[400px] h-[400px] rounded-full pointer-events-none z-[9998] mix-blend-screen hidden md:block"
         style={{
-          background: 'radial-gradient(circle, rgba(0, 112, 243, 0.15) 0%, rgba(255,255,255,0) 50%)',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255,255,255,0) 50%)',
           x: cursorX,
           y: cursorY,
           translateX: "-50%",
