@@ -60,13 +60,18 @@ export default function Footer() {
           </div>
           
           <div className="flex justify-center md:justify-end order-3 md:order-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent/50 transition-colors group shadow-sm">
+            <div 
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent/50 transition-all duration-300 group shadow-sm cursor-default"
+              title="Total Profile Views"
+            >
               <Eye size={16} className="text-faang-text-muted group-hover:text-faang-accent transition-colors" />
-              <div className="flex items-center opacity-70 group-hover:opacity-100 transition-opacity grayscale overflow-hidden">
+              <div className="h-3.5 w-px bg-faang-border group-hover:bg-faang-accent/50 transition-colors"></div>
+              <div className="flex items-center opacity-80 group-hover:opacity-100 transition-opacity overflow-hidden">
                 <img 
-                  src="https://komarev.com/ghpvc/?username=vanitdantani-portfolio&label=%20&color=27272a&style=flat-square" 
+                  src="https://komarev.com/ghpvc/?username=vanitdantani-portfolio&label=%20&color=222222&style=flat-square" 
                   alt="Visitor Count" 
-                  className="h-4 -ml-[22px] max-w-none" 
+                  className="h-4 -ml-[14px] max-w-none mix-blend-screen" 
+                  style={{ filter: "brightness(1.5)" }}
                 />
               </div>
             </div>
