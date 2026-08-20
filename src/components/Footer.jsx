@@ -61,17 +61,27 @@ export default function Footer() {
           
           <div className="flex justify-center md:justify-end order-3 md:order-3">
             <div 
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent/50 transition-all duration-300 group shadow-sm cursor-default"
+              className="relative flex items-center gap-3 px-4 py-2 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent/50 hover:shadow-[0_0_15px_rgba(0,112,243,0.15)] transition-all duration-300 group cursor-default"
               title="Total Profile Views"
             >
-              <Eye size={16} className="text-faang-text-muted group-hover:text-faang-accent transition-colors" />
-              <div className="h-3.5 w-px bg-faang-border group-hover:bg-faang-accent/50 transition-colors"></div>
-              <div className="flex items-center opacity-80 group-hover:opacity-100 transition-opacity overflow-hidden">
+              {/* Live Indicator Dot */}
+              <div className="absolute top-0 right-0 -mt-1 -mr-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-faang-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-faang-accent border-2 border-faang-bg"></span>
+              </div>
+
+              <div className="flex items-center gap-2 text-faang-text-muted group-hover:text-faang-accent transition-colors">
+                <Eye size={16} />
+                <span className="text-xs font-semibold tracking-wider uppercase">Views</span>
+              </div>
+              
+              <div className="h-4 w-px bg-faang-border group-hover:bg-faang-accent/30 transition-colors"></div>
+              
+              <div className="flex items-center overflow-hidden opacity-90 group-hover:opacity-100 transition-opacity">
                 <img 
-                  src="https://komarev.com/ghpvc/?username=vanitdantani-portfolio&label=%20&color=222222&style=flat-square" 
+                  src="https://komarev.com/ghpvc/?username=vanitdantani-portfolio&label=%20&color=000000&style=for-the-badge" 
                   alt="Visitor Count" 
-                  className="h-4 -ml-[14px] max-w-none mix-blend-screen" 
-                  style={{ filter: "brightness(1.5)" }}
+                  className="h-[22px] -ml-[18px] max-w-none visitor-counter" 
                 />
               </div>
             </div>
