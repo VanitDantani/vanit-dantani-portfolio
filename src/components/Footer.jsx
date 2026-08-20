@@ -64,12 +64,6 @@ export default function Footer() {
               className="relative flex items-center gap-3 px-4 py-2 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent/50 hover:shadow-[0_0_15px_rgba(0,112,243,0.15)] transition-all duration-300 group cursor-default"
               title="Total Profile Views"
             >
-              {/* Live Indicator Dot */}
-              <div className="absolute top-0 right-0 -mt-1 -mr-1 flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-faang-accent opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-faang-accent border-2 border-faang-bg"></span>
-              </div>
-
               <div className="flex items-center text-faang-text-muted group-hover:text-faang-accent transition-colors">
                 <Eye size={16} />
               </div>
