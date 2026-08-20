@@ -70,9 +70,8 @@ export default function Footer() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-faang-accent border-2 border-faang-bg"></span>
               </div>
 
-              <div className="flex items-center gap-2 text-faang-text-muted group-hover:text-faang-accent transition-colors">
+              <div className="flex items-center text-faang-text-muted group-hover:text-faang-accent transition-colors">
                 <Eye size={16} />
-                <span className="text-xs font-semibold tracking-wider uppercase">Views</span>
               </div>
               
               <div className="h-4 w-px bg-faang-border group-hover:bg-faang-accent/30 transition-colors"></div>
