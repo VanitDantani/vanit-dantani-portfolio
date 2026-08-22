@@ -21,26 +21,7 @@ export default function Footer() {
             </a>
           </div>
 
-          <div className="flex gap-6 mt-6 md:mt-0">
-            <a href="https://github.com/VanitDantani" target="_blank" rel="noopener noreferrer" className="group relative p-3 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent text-faang-text-muted hover:text-faang-accent transition-all hover:scale-110 shadow-lg">
-              <Code size={24} />
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all group-hover:-translate-y-1 bg-faang-bg border border-faang-border px-3 py-1 rounded text-xs font-mono text-faang-text whitespace-nowrap pointer-events-none shadow-xl">
-                GitHub
-              </span>
-            </a>
-            <a href="https://www.linkedin.com/in/vanit-dantani-23b2582b1" target="_blank" rel="noopener noreferrer" className="group relative p-3 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent text-faang-text-muted hover:text-faang-accent transition-all hover:scale-110 shadow-lg">
-              <Globe size={24} />
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all group-hover:-translate-y-1 bg-faang-bg border border-faang-border px-3 py-1 rounded text-xs font-mono text-faang-text whitespace-nowrap pointer-events-none shadow-xl">
-                LinkedIn
-              </span>
-            </a>
-            <a href="mailto:vanitdantani05@gmail.com" className="group relative p-3 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent text-faang-text-muted hover:text-faang-accent transition-all hover:scale-110 shadow-lg">
-              <Mail size={24} />
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all group-hover:-translate-y-1 bg-faang-bg border border-faang-border px-3 py-1 rounded text-xs font-mono text-faang-text whitespace-nowrap pointer-events-none shadow-xl">
-                Email
-              </span>
-            </a>
-          </div>
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6 pt-8 border-t border-faang-border/30">
