@@ -1,1 +1,1 @@
-this is my portfolio website it shows my all the details
+This is my portfolio website. It showcases all my professional details and projects.
