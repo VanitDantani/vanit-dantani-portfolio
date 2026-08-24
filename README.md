@@ -37,3 +37,7 @@ To run this project locally, follow these steps:
 
 ## 📬 Contact
 Feel free to reach out if you're looking for a developer, have a question, or just want to connect.
+
+## 📝 License
+
+This project is open-source and available under the MIT License.
