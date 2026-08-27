@@ -8,9 +8,4 @@ This is my professional portfolio website built to showcase my professional deta
 - Showcase of professional projects and experience
 - Contact information and social links
 
-## 🛠 Tech Stack
-
-- React
-- JavaScript (ES6+)
-- HTML5 & CSS3
 

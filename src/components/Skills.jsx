@@ -5,12 +5,12 @@ const skillsData = [
   {
     category: 'Programming Languages',
     icon: <Code2 className="w-7 h-7 text-faang-accent" />,
-    skills: [ 'JavaScript', 'Python', 'Java'],
+    skills: ['JavaScript', 'Python', 'Java'],
   },
   {
     category: 'Web Development',
     icon: <Layers className="w-7 h-7 text-faang-accent" />,
-    skills: ['HTML5', 'CSS3', 'React', 'Tailwind CSS', 'Bootstrap', 'Node.js', 'Express.js'],
+    skills: ['HTML5', 'CSS3', 'React', 'CSS', 'Bootstrap', 'Node.js', 'Express.js'],
   },
   {
     category: 'Tools & Databases',
@@ -45,16 +45,16 @@ export default function Skills() {
             >
               {/* Background Glow */}
               <div className="absolute -inset-1 bg-gradient-to-br from-faang-accent/20 to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-700 pointer-events-none"></div>
-              
+
               <div className="relative z-10 flex-1">
                 <div className="bg-faang-bg inline-flex p-4 rounded-2xl border border-faang-border shadow-inner mb-8 group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(0,112,243,0.4)] transition-all duration-300">
                   {group.icon}
                 </div>
-                
+
                 <h3 className="text-xl md:text-2xl font-bold text-faang-text mb-8 group-hover:text-faang-accent transition-colors duration-300 tracking-tight">
                   {group.category}
                 </h3>
-                
+
                 <div className="flex flex-wrap gap-3 mt-auto">
                   {group.skills.map((skill, sIndex) => (
                     <span
