@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDown, Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const phrases = [
@@ -132,21 +131,7 @@ export default function Hero() {
 
       <div className="section-padding text-center relative z-10">
 
-        {/* Floating badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-faang-surface border border-faang-border text-faang-text-muted text-sm font-mono"
-        >
-          <motion.span
-            animate={{ rotate: [0, 20, -20, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <Sparkles size={14} className="text-faang-accent" />
-          </motion.span>
-          Open to new opportunities
-        </motion.div>
+
 
         {/* Heading */}
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight font-display text-balance mb-2 leading-[1.15]">
