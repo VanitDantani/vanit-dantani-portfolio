@@ -50,7 +50,6 @@ function useScramble(target, { duration = 1200, fps = 30 } = {}) {
 const phrases = [
   'software systems.',
   'web applications.',
-  'AI-powered apps.',
   'Backend systems.',
   'scalable APIs.',
   'intelligent tools.',
