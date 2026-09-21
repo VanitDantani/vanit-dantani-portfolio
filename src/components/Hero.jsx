@@ -12,26 +12,26 @@ const phrases = [
 
 const HOLD_DURATION = 2600; // ms to hold before switching
 
-// Each word drops from above with bounce, then exits upward
+// Each LETTER drops from above one by one
 function DroppingWords({ phrase, onDone }) {
-  const words = phrase.split(' ');
+  const chars = phrase.split('');
 
   const containerVariants = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: 0.28, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.06, delayChildren: 0.05 },
     },
     exit: {
-      transition: { staggerChildren: 0.1, staggerDirection: -1 },
+      transition: { staggerChildren: 0.04, staggerDirection: -1 },
     },
   };
 
-  const wordVariants = {
+  const letterVariants = {
     hidden: {
-      y: -90,
+      y: -70,
       opacity: 0,
-      rotateX: -50,
-      filter: 'blur(6px)',
+      rotateX: -45,
+      filter: 'blur(4px)',
     },
     visible: {
       y: 0,
@@ -40,48 +40,50 @@ function DroppingWords({ phrase, onDone }) {
       filter: 'blur(0px)',
       transition: {
         type: 'spring',
-        stiffness: 70,
-        damping: 20,
-        mass: 1.1,
+        stiffness: 90,
+        damping: 18,
+        mass: 0.9,
       },
     },
     exit: {
-      y: 60,
+      y: 50,
       opacity: 0,
-      filter: 'blur(4px)',
-      transition: { duration: 0.4, ease: [0.4, 0, 1, 1] },
+      filter: 'blur(3px)',
+      transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
     },
   };
 
-  // Signal parent when entry animation is done (last word lands ≈ stagger * words + spring)
+  // total drop time = delayChildren + stagger * chars + spring settle (~600ms)
   useEffect(() => {
-    const delay = 0.05 * 1000 + words.length * 130 + 700 + HOLD_DURATION;
+    const delay = 50 + chars.length * 60 + 600 + HOLD_DURATION;
     const t = setTimeout(onDone, delay);
     return () => clearTimeout(t);
   }, [phrase]);
 
   return (
     <motion.span
-      className="inline-flex flex-wrap justify-center gap-x-[0.28em] perspective-[600px]"
+      className="inline-flex flex-wrap justify-center"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
+      style={{ perspective: '500px' }}
     >
-      {words.map((word, i) => (
+      {chars.map((char, i) => (
         <motion.span
           key={i}
-          variants={wordVariants}
+          variants={letterVariants}
           className="inline-block origin-top"
           style={{
-            // Each word gets a slightly different hue across the gradient
+            // space character keeps its width
+            width: char === ' ' ? '0.3em' : undefined,
             color: 'transparent',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             backgroundImage: 'linear-gradient(135deg, #0070f3 0%, #7928ca 50%, #ff0080 100%)',
           }}
         >
-          {word}
+          {char === ' ' ? '\u00A0' : char}
         </motion.span>
       ))}
     </motion.span>
