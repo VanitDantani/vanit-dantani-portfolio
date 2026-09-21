@@ -1,51 +1,6 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowDown, Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-
-const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
-
-// Scramble hook: cycles random chars before settling on target word
-function useScramble(target, { duration = 1200, fps = 30 } = {}) {
-  const [text, setText] = useState('');
-  const frameRef = useRef(null);
-
-  useEffect(() => {
-    let startTime = null;
-    const totalFrames = Math.floor((duration / 1000) * fps);
-    let frame = 0;
-
-    const tick = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      frame++;
-
-      const progress = Math.min(frame / totalFrames, 1);
-      // How many letters are "resolved" increases over time
-      const resolved = Math.floor(progress * target.length);
-
-      const result = target
-        .split('')
-        .map((char, i) => {
-          if (char === ' ') return ' ';
-          if (i < resolved) return char; // locked in
-          return CHARS[Math.floor(Math.random() * CHARS.length)];
-        })
-        .join('');
-
-      setText(result);
-
-      if (progress < 1) {
-        frameRef.current = requestAnimationFrame(tick);
-      } else {
-        setText(target);
-      }
-    };
-
-    frameRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frameRef.current);
-  }, [target, duration, fps]);
-
-  return text;
-}
 
 const phrases = [
   'software systems.',
@@ -55,51 +10,177 @@ const phrases = [
   'intelligent tools.',
 ];
 
-// Slot flip animation variants
-const slotVariants = {
-  enter: { y: 40, opacity: 0, filter: 'blur(6px)' },
-  center: { y: 0, opacity: 1, filter: 'blur(0px)', transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
-  exit: { y: -40, opacity: 0, filter: 'blur(6px)', transition: { duration: 0.35, ease: [0.4, 0, 1, 1] } },
-};
+const SHOOT_DURATION = 1100; // ms for star to cross
+const HOLD_DURATION  = 2400; // ms to hold text
+const FADE_DURATION  = 600;  // ms to fade out text
 
-function ScrambleSlot() {
-  const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState('scramble'); // 'scramble' | 'hold'
-  const target = phrases[index];
-  const scrambled = useScramble(phase === 'scramble' ? target : target, {
-    duration: phase === 'scramble' ? 1000 : 0,
-  });
+function MeteorText() {
+  const [idx, setIdx]                 = useState(0);
+  const [phase, setPhase]             = useState('shooting'); // shooting | holding | fading
+  const [revealedCount, setRevealedCount] = useState(0);
+  const [starX, setStarX]             = useState(-180);
+  const [starY, setStarY]             = useState(0); // small vertical drift
+  const containerRef                  = useRef(null);
+  const letterRefs                    = useRef([]);
+  const rafRef                        = useRef(null);
+  const holdTimerRef                  = useRef(null);
+  const nextTimerRef                  = useRef(null);
+
+  const phrase = phrases[idx];
+
+  // Reset letter refs array length on phrase change
+  letterRefs.current = letterRefs.current.slice(0, phrase.length);
 
   useEffect(() => {
-    // After scramble settles, hold then move to next
-    const scrambleDuration = 1200;
-    const holdDuration = 2000;
+    // Random slight vertical drift so each meteor feels unique
+    setStarY(Math.random() * 10 - 5);
+    setRevealedCount(0);
+    setStarX(-180);
+    setPhase('shooting');
 
-    const t1 = setTimeout(() => setPhase('hold'), scrambleDuration);
-    const t2 = setTimeout(() => {
-      setPhase('scramble');
-      setIndex((i) => (i + 1) % phrases.length);
-    }, scrambleDuration + holdDuration);
+    const startTime = performance.now();
 
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [index]);
+    const tick = (now) => {
+      const progress = Math.min((now - startTime) / SHOOT_DURATION, 1);
+
+      const container = containerRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const totalTravel = rect.width + 240;
+      const curX = -180 + progress * totalTravel;
+      setStarX(curX);
+
+      // Reveal letters whose centre the star has passed
+      let count = 0;
+      for (let i = 0; i < letterRefs.current.length; i++) {
+        const el = letterRefs.current[i];
+        if (!el) continue;
+        const lr = el.getBoundingClientRect();
+        const letterCX = lr.left - rect.left + lr.width / 2;
+        if (curX >= letterCX) count = i + 1;
+      }
+      setRevealedCount(count);
+
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        // Ensure all letters revealed
+        setRevealedCount(phrase.length);
+        setPhase('holding');
+
+        holdTimerRef.current = setTimeout(() => setPhase('fading'), HOLD_DURATION);
+        nextTimerRef.current = setTimeout(() => {
+          setIdx(i => (i + 1) % phrases.length);
+        }, HOLD_DURATION + FADE_DURATION);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      clearTimeout(holdTimerRef.current);
+      clearTimeout(nextTimerRef.current);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx]);
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.span
-        key={index}
-        variants={slotVariants}
-        initial="enter"
-        animate="center"
-        exit="exit"
-        className="block text-transparent bg-clip-text font-bold"
+    <div
+      ref={containerRef}
+      className="relative inline-block"
+      style={{ minWidth: '260px' }}
+    >
+      {/* ── Shooting Star ── */}
+      {phase === 'shooting' && (
+        <div
+          className="absolute pointer-events-none z-20"
+          style={{
+            left: starX,
+            top: `calc(50% + ${starY}px)`,
+            transform: 'translateY(-50%)',
+          }}
+        >
+          {/* Fire tail */}
+          <div style={{
+            width: 180,
+            height: 3,
+            background:
+              'linear-gradient(to right, transparent, rgba(255,80,0,0.2), rgba(255,140,0,0.6), rgba(255,220,100,0.9), #ffffff)',
+            boxShadow: '0 0 8px 4px rgba(255,120,0,0.45), 0 0 18px 6px rgba(255,60,0,0.2)',
+            borderRadius: 4,
+          }} />
+          {/* Sparks along the tail */}
+          {[0.3, 0.55, 0.75].map((frac, si) => (
+            <div
+              key={si}
+              style={{
+                position: 'absolute',
+                left: 180 * frac,
+                top: `${(si % 2 === 0 ? -2 : 2) + Math.random() * 2 - 1}px`,
+                width: 3 - si * 0.5,
+                height: 3 - si * 0.5,
+                borderRadius: '50%',
+                background: '#ffcc44',
+                boxShadow: '0 0 4px 2px rgba(255,160,0,0.8)',
+                opacity: 0.9 - si * 0.2,
+              }}
+            />
+          ))}
+          {/* Bright core */}
+          <div style={{
+            position: 'absolute',
+            right: -5,
+            top: '50%',
+            transform: 'translate(50%, -50%)',
+            width: 9,
+            height: 9,
+            borderRadius: '50%',
+            background: '#ffffff',
+            boxShadow:
+              '0 0 6px 3px #ffe580, 0 0 14px 6px rgba(255,140,0,0.9), 0 0 30px 10px rgba(255,60,0,0.5)',
+          }} />
+        </div>
+      )}
+
+      {/* ── Gradient Text letters ── */}
+      <span
+        className="font-bold"
         style={{
-          backgroundImage: 'linear-gradient(90deg, #0070f3 0%, #7928ca 50%, #ff0080 100%)',
+          display: 'inline-block',
+          opacity: phase === 'fading' ? 0 : 1,
+          transition: phase === 'fading' ? `opacity ${FADE_DURATION}ms ease-out` : 'none',
         }}
       >
-        {scrambled || '\u00A0'}
-      </motion.span>
-    </AnimatePresence>
+        {phrase.split('').map((char, i) => {
+          // Fire glow on the 1-3 letters just behind the star
+          const justRevealed = i >= revealedCount - 3 && i < revealedCount;
+          return (
+            <span
+              key={`${idx}-${i}`}
+              ref={el => { letterRefs.current[i] = el; }}
+              style={{
+                display: 'inline-block',
+                opacity: i < revealedCount ? 1 : 0,
+                // Gradient per-letter using hue spread
+                color: 'transparent',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                backgroundImage: `linear-gradient(90deg, #0070f3, #7928ca, #ff0080)`,
+                backgroundSize: `${phrase.length * 18}px 100%`,
+                backgroundPosition: `-${i * 18}px 0`,
+                textShadow: justRevealed
+                  ? '0 0 18px #ff9900, 0 0 36px #ff4400, 0 0 60px rgba(255,80,0,0.6)'
+                  : 'none',
+                transition: 'text-shadow 1.2s ease-out, opacity 0s',
+              }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          );
+        })}
+      </span>
+    </div>
   );
 }
 
@@ -109,10 +190,10 @@ export default function Hero() {
       id="hero"
       className="relative flex items-center justify-center overflow-hidden bg-transparent pt-32 md:pt-20 min-h-[90vh]"
     >
-      {/* Ambient glow */}
+      {/* Ambient glow behind heading */}
       <motion.div
-        className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full bg-faang-accent/10 blur-[120px] pointer-events-none"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.75, 0.4] }}
+        className="absolute top-[25%] left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-faang-accent/10 blur-[120px] pointer-events-none"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.35, 0.7, 0.35] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
       />
 
@@ -135,8 +216,8 @@ export default function Hero() {
         </motion.div>
 
         {/* Heading */}
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight font-display text-balance mb-2 leading-[1.1]">
-          {/* Static line — blur-reveal on mount */}
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight font-display text-balance mb-2 leading-[1.15]">
+          {/* Static top line */}
           <motion.span
             className="block text-faang-text"
             initial={{ opacity: 0, filter: 'blur(12px)', y: 20 }}
@@ -146,14 +227,14 @@ export default function Hero() {
             Building scalable
           </motion.span>
 
-          {/* Scramble + Slot line */}
+          {/* Meteor-write line */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.4 }}
-            className="relative h-[1.15em] overflow-hidden"
+            transition={{ delay: 0.6, duration: 0.3 }}
+            className="flex justify-center items-center h-[1.2em] overflow-visible"
           >
-            <ScrambleSlot />
+            <MeteorText />
           </motion.div>
         </h1>
 
@@ -164,7 +245,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-faang-text-muted mb-10 max-w-2xl mx-auto font-mono text-sm md:text-base mt-6"
         >
-          I'm Vanit Dantani, an aspiring AI Engineer focused on creating high-performance, intelligent applications.
+          I'm Vanit Dantani, an aspiring AI Engineer focused on creating
+          high-performance, intelligent applications.
         </motion.p>
 
         {/* CTA Buttons */}
