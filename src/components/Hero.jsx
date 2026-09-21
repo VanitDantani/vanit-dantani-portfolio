@@ -19,18 +19,18 @@ function DroppingWords({ phrase, onDone }) {
   const containerVariants = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: 0.13, delayChildren: 0.05 },
+      transition: { staggerChildren: 0.28, delayChildren: 0.1 },
     },
     exit: {
-      transition: { staggerChildren: 0.08, staggerDirection: -1 },
+      transition: { staggerChildren: 0.1, staggerDirection: -1 },
     },
   };
 
   const wordVariants = {
     hidden: {
-      y: -80,
+      y: -90,
       opacity: 0,
-      rotateX: -60,
+      rotateX: -50,
       filter: 'blur(6px)',
     },
     visible: {
@@ -40,16 +40,16 @@ function DroppingWords({ phrase, onDone }) {
       filter: 'blur(0px)',
       transition: {
         type: 'spring',
-        stiffness: 200,
-        damping: 18,
-        mass: 0.8,
+        stiffness: 70,
+        damping: 20,
+        mass: 1.1,
       },
     },
     exit: {
       y: 60,
       opacity: 0,
       filter: 'blur(4px)',
-      transition: { duration: 0.35, ease: [0.4, 0, 1, 1] },
+      transition: { duration: 0.4, ease: [0.4, 0, 1, 1] },
     },
   };
 
