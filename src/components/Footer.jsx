@@ -1,4 +1,4 @@
-import { Mail, Globe, Code, ArrowUpRight, Eye } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -40,26 +40,7 @@ export default function Footer() {
             </div>
           </div>
           
-          <div className="flex justify-center md:justify-end order-3 md:order-3">
-            <div 
-              className="relative flex items-center gap-3 px-4 py-2 rounded-full bg-faang-surface border border-faang-border hover:border-faang-accent/50 hover:shadow-[0_0_15px_rgba(0,112,243,0.15)] transition-all duration-300 group cursor-default"
-              title="Total Profile Views"
-            >
-              <div className="flex items-center text-faang-text-muted group-hover:text-faang-accent transition-colors">
-                <Eye size={16} />
-              </div>
-              
-              <div className="h-4 w-px bg-faang-border group-hover:bg-faang-accent/30 transition-colors"></div>
-              
-              <div className="flex items-center overflow-hidden opacity-90 group-hover:opacity-100 transition-opacity">
-                <img 
-                  src="https://komarev.com/ghpvc/?username=vanitdantani-portfolio&label=%20&color=000000&style=for-the-badge" 
-                  alt="Visitor Count" 
-                  className="h-[22px] -ml-[18px] max-w-none visitor-counter" 
-                />
-              </div>
-            </div>
-          </div>
+
 
         </div>
       </div>
