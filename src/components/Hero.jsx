@@ -10,64 +10,62 @@ const phrases = [
   'intelligent tools.',
 ];
 
-const SHOOT_DURATION = 1100; // ms for star to cross
-const HOLD_DURATION  = 2400; // ms to hold text
+const SHOOT_DURATION = 1600; // smooth pace across full screen
+const HOLD_DURATION  = 2400; // ms to hold text visible
 const FADE_DURATION  = 600;  // ms to fade out text
 
+// Smooth easeInOutCubic
+function easeInOut(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
 function MeteorText() {
-  const [idx, setIdx]                 = useState(0);
-  const [phase, setPhase]             = useState('shooting'); // shooting | holding | fading
+  const [idx, setIdx]                     = useState(0);
+  const [phase, setPhase]                 = useState('shooting');
   const [revealedCount, setRevealedCount] = useState(0);
-  const [starX, setStarX]             = useState(-180);
-  const [starY, setStarY]             = useState(0); // small vertical drift
-  const containerRef                  = useRef(null);
-  const letterRefs                    = useRef([]);
-  const rafRef                        = useRef(null);
-  const holdTimerRef                  = useRef(null);
-  const nextTimerRef                  = useRef(null);
+  // Star is in fixed viewport coords
+  const [starX, setStarX]                 = useState(-220);
+  const [starY, setStarY]                 = useState(0);
+  const containerRef                      = useRef(null);
+  const letterRefs                        = useRef([]);
+  const rafRef                            = useRef(null);
+  const holdTimerRef                      = useRef(null);
+  const nextTimerRef                      = useRef(null);
 
   const phrase = phrases[idx];
-
-  // Reset letter refs array length on phrase change
   letterRefs.current = letterRefs.current.slice(0, phrase.length);
 
   useEffect(() => {
-    // Random slight vertical drift so each meteor feels unique
-    setStarY(Math.random() * 10 - 5);
+    // Fresh random Y in upper portion of viewport each cycle
+    const randomY = window.innerHeight * (0.15 + Math.random() * 0.40);
+    setStarY(randomY);
     setRevealedCount(0);
-    setStarX(-180);
+    setStarX(-220);
     setPhase('shooting');
 
     const startTime = performance.now();
+    const endX = window.innerWidth + 120; // go fully off-screen right
 
     const tick = (now) => {
-      const progress = Math.min((now - startTime) / SHOOT_DURATION, 1);
-
-      const container = containerRef.current;
-      if (!container) return;
-      const rect = container.getBoundingClientRect();
-      const totalTravel = rect.width + 240;
-      const curX = -180 + progress * totalTravel;
+      const t = Math.min((now - startTime) / SHOOT_DURATION, 1);
+      const curX = -220 + easeInOut(t) * (endX + 220); // full screen travel
       setStarX(curX);
 
-      // Reveal letters whose centre the star has passed
+      // Reveal letters: compare viewport-level X directly
       let count = 0;
       for (let i = 0; i < letterRefs.current.length; i++) {
         const el = letterRefs.current[i];
         if (!el) continue;
         const lr = el.getBoundingClientRect();
-        const letterCX = lr.left - rect.left + lr.width / 2;
-        if (curX >= letterCX) count = i + 1;
+        if (curX >= lr.left + lr.width / 2) count = i + 1;
       }
       setRevealedCount(count);
 
-      if (progress < 1) {
+      if (t < 1) {
         rafRef.current = requestAnimationFrame(tick);
       } else {
-        // Ensure all letters revealed
         setRevealedCount(phrase.length);
         setPhase('holding');
-
         holdTimerRef.current = setTimeout(() => setPhase('fading'), HOLD_DURATION);
         nextTimerRef.current = setTimeout(() => {
           setIdx(i => (i + 1) % phrases.length);
@@ -76,7 +74,6 @@ function MeteorText() {
     };
 
     rafRef.current = requestAnimationFrame(tick);
-
     return () => {
       cancelAnimationFrame(rafRef.current);
       clearTimeout(holdTimerRef.current);
@@ -91,13 +88,14 @@ function MeteorText() {
       className="relative inline-block"
       style={{ minWidth: '260px' }}
     >
-      {/* ── Shooting Star ── */}
+      {/* ── Shooting Star (fixed to viewport so it goes full screen) ── */}
       {phase === 'shooting' && (
         <div
-          className="absolute pointer-events-none z-20"
+          className="pointer-events-none z-[9999]"
           style={{
+            position: 'fixed',
             left: starX,
-            top: `calc(50% + ${starY}px)`,
+            top: starY,
             transform: 'translateY(-50%)',
           }}
         >
