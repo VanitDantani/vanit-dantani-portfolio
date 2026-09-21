@@ -1,45 +1,108 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-// Typewriter hook – types and deletes text in a loop
-function useTypewriter(words, { typeSpeed = 80, deleteSpeed = 40, pauseMs = 1800 } = {}) {
-  const [displayed, setDisplayed] = useState('');
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+
+// Scramble hook: cycles random chars before settling on target word
+function useScramble(target, { duration = 1200, fps = 30 } = {}) {
+  const [text, setText] = useState('');
+  const frameRef = useRef(null);
 
   useEffect(() => {
-    const current = words[wordIndex % words.length];
-    let timeout;
+    let startTime = null;
+    const totalFrames = Math.floor((duration / 1000) * fps);
+    let frame = 0;
 
-    if (!isDeleting && displayed === current) {
-      // Finished typing – pause then start deleting
-      timeout = setTimeout(() => setIsDeleting(true), pauseMs);
-    } else if (isDeleting && displayed === '') {
-      // Finished deleting – move to next word
-      setIsDeleting(false);
-      setWordIndex((i) => (i + 1) % words.length);
-    } else {
-      const next = isDeleting
-        ? current.slice(0, displayed.length - 1)
-        : current.slice(0, displayed.length + 1);
-      timeout = setTimeout(() => setDisplayed(next), isDeleting ? deleteSpeed : typeSpeed);
-    }
+    const tick = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      frame++;
 
-    return () => clearTimeout(timeout);
-  }, [displayed, isDeleting, wordIndex, words, typeSpeed, deleteSpeed, pauseMs]);
+      const progress = Math.min(frame / totalFrames, 1);
+      // How many letters are "resolved" increases over time
+      const resolved = Math.floor(progress * target.length);
 
-  return displayed;
+      const result = target
+        .split('')
+        .map((char, i) => {
+          if (char === ' ') return ' ';
+          if (i < resolved) return char; // locked in
+          return CHARS[Math.floor(Math.random() * CHARS.length)];
+        })
+        .join('');
+
+      setText(result);
+
+      if (progress < 1) {
+        frameRef.current = requestAnimationFrame(tick);
+      } else {
+        setText(target);
+      }
+    };
+
+    frameRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, [target, duration, fps]);
+
+  return text;
+}
+
+const phrases = [
+  'software systems.',
+  'AI-powered apps.',
+  'scalable APIs.',
+  'intelligent tools.',
+];
+
+// Slot flip animation variants
+const slotVariants = {
+  enter: { y: 40, opacity: 0, filter: 'blur(6px)' },
+  center: { y: 0, opacity: 1, filter: 'blur(0px)', transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+  exit: { y: -40, opacity: 0, filter: 'blur(6px)', transition: { duration: 0.35, ease: [0.4, 0, 1, 1] } },
+};
+
+function ScrambleSlot() {
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState('scramble'); // 'scramble' | 'hold'
+  const target = phrases[index];
+  const scrambled = useScramble(phase === 'scramble' ? target : target, {
+    duration: phase === 'scramble' ? 1000 : 0,
+  });
+
+  useEffect(() => {
+    // After scramble settles, hold then move to next
+    const scrambleDuration = 1200;
+    const holdDuration = 2000;
+
+    const t1 = setTimeout(() => setPhase('hold'), scrambleDuration);
+    const t2 = setTimeout(() => {
+      setPhase('scramble');
+      setIndex((i) => (i + 1) % phrases.length);
+    }, scrambleDuration + holdDuration);
+
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [index]);
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.span
+        key={index}
+        variants={slotVariants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        className="block text-transparent bg-clip-text font-bold"
+        style={{
+          backgroundImage: 'linear-gradient(90deg, #0070f3 0%, #7928ca 50%, #ff0080 100%)',
+        }}
+      >
+        {scrambled || '\u00A0'}
+      </motion.span>
+    </AnimatePresence>
+  );
 }
 
 export default function Hero() {
-  const typewriterText = useTypewriter([
-    'software systems.',
-    'AI-powered apps.',
-    'scalable APIs.',
-    'full-stack solutions.',
-  ]);
-
   return (
     <section
       id="hero"
@@ -47,23 +110,23 @@ export default function Hero() {
     >
       {/* Ambient glow */}
       <motion.div
-        className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-faang-accent/10 blur-[100px] pointer-events-none"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full bg-faang-accent/10 blur-[120px] pointer-events-none"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.75, 0.4] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       <div className="section-padding text-center relative z-10">
 
         {/* Floating badge */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-faang-surface border border-faang-border text-faang-text-muted text-sm font-mono"
         >
           <motion.span
-            animate={{ rotate: [0, 15, -15, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            animate={{ rotate: [0, 20, -20, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           >
             <Sparkles size={14} className="text-faang-accent" />
           </motion.span>
@@ -71,38 +134,34 @@ export default function Hero() {
         </motion.div>
 
         {/* Heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl md:text-7xl font-bold tracking-tight font-display text-balance mb-6 text-faang-text"
-        >
-          Building scalable <br />
-
-          {/* Typewriter line with animated gradient */}
-          <span
-            className="text-transparent bg-clip-text"
-            style={{
-              backgroundImage: 'linear-gradient(90deg, #0070f3, #7928ca, #ff0080)',
-            }}
-          >
-            {typewriterText}
-          </span>
-
-          {/* Blinking cursor */}
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight font-display text-balance mb-2 leading-[1.1]">
+          {/* Static line — blur-reveal on mount */}
           <motion.span
-            animate={{ opacity: [1, 0, 1] }}
-            transition={{ duration: 0.8, repeat: Infinity }}
-            className="inline-block ml-1 w-[3px] h-[0.9em] align-middle bg-faang-accent rounded-sm"
-          />
-        </motion.h1>
+            className="block text-faang-text"
+            initial={{ opacity: 0, filter: 'blur(12px)', y: 20 }}
+            animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          >
+            Building scalable
+          </motion.span>
+
+          {/* Scramble + Slot line */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.4 }}
+            className="relative h-[1.15em] overflow-hidden"
+          >
+            <ScrambleSlot />
+          </motion.div>
+        </h1>
 
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-faang-text-muted mb-10 max-w-2xl mx-auto font-mono text-sm md:text-base"
+          transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-faang-text-muted mb-10 max-w-2xl mx-auto font-mono text-sm md:text-base mt-6"
         >
           I'm Vanit Dantani, an aspiring AI Engineer focused on creating high-performance, intelligent applications.
         </motion.p>
@@ -111,12 +170,12 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full"
         >
           <motion.a
             href="#projects"
-            whileHover={{ scale: 1.04, boxShadow: '0 0 25px rgba(0,112,243,0.4)' }}
+            whileHover={{ scale: 1.05, boxShadow: '0 0 28px rgba(0,112,243,0.45)' }}
             whileTap={{ scale: 0.97 }}
             className="w-full sm:w-auto px-8 py-3 rounded-md bg-faang-text text-faang-bg font-display font-medium hover:bg-white/90 transition-colors text-center"
           >
@@ -124,7 +183,7 @@ export default function Hero() {
           </motion.a>
           <motion.a
             href="#contact"
-            whileHover={{ scale: 1.04 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             className="w-full sm:w-auto px-8 py-3 rounded-md bg-faang-surface text-faang-text font-display font-medium border border-faang-border hover:border-faang-text-muted transition-colors text-center"
           >
@@ -137,7 +196,7 @@ export default function Hero() {
           className="mt-16 flex flex-col items-center gap-2 text-faang-text-muted"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 1 }}
+          transition={{ delay: 1.3, duration: 1 }}
         >
           <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
           <motion.div
