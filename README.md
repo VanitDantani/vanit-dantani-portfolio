@@ -11,3 +11,5 @@ This is my professional portfolio website built to showcase my professional deta
 
 
 <!-- Minor documentation update -->
+
+<!-- Minor documentation update 2 -->
