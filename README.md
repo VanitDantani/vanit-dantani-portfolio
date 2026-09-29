@@ -9,13 +9,3 @@ This is my professional portfolio website built to showcase my professional deta
 - Contact information and social links
 
 
-
-<!-- Minor documentation update -->
-
-<!-- Minor documentation update 2 -->
-
-<!-- Minor documentation update 3 -->
-
-<!-- Minor documentation update 4 -->
-
-<!-- Minor documentation update 5 -->
